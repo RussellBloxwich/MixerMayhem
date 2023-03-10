@@ -3,7 +3,7 @@ import "./App.css";
 import OptionSelector from "./components/OptionSelector";
 
 function App() {
-  const [selected, setSelected] = useState<number>();
+  const [selected, setSelected] = useState<string>();
 
   console.log(selected);
 
@@ -20,7 +20,7 @@ function App() {
         <button
           className="skip-finish-button"
           onClick={() => {
-            setSelected(-1);
+            setSelected("skip");
           }}
         >
           Skip Round
@@ -28,7 +28,7 @@ function App() {
         <button
           className="skip-finish-button"
           onClick={() => {
-            setSelected(-2);
+            setSelected("finish");
           }}
         >
           Finish Drink

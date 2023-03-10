@@ -3,7 +3,7 @@ import "./OptionSelector.css";
 
 interface IOptions {
   options: string[];
-  setSelected: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setSelected: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const OptionSelector = ({ options, setSelected }: IOptions) => {
@@ -13,7 +13,7 @@ const OptionSelector = ({ options, setSelected }: IOptions) => {
         return (
           <button
             onClick={() => {
-              setSelected(i);
+              setSelected(option);
             }}
           >
             {option}
