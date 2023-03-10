@@ -11,6 +11,5 @@ export interface IReceiveData {
   roundNumber: number;
   drinks: { drinkName: string; drinkChance: number }[];
   isFinished: boolean;
-  drinkState: string[];
   addedDrinks : string[]
 }
