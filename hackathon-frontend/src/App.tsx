@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
+import { getData } from "./components/InputOutput";
+import { IReceiveData, ISendData } from "./components/types";
 
 function App() {
   const [selected, setSelected] = useState<string>();
+  const [currentIn, setCurrentIn] = useState<IReceiveData>(getData())
+  const [currentOut, setCurrentOut] = useState<ISendData>()
 
   console.log(selected);
 
   return (
     <div className="main-screen">
       <div className="App">
-        <div className="project-name">Name of Project</div>
+        <div className="project-name">Round Number: {currentIn.roundNumber}</div>
         <OptionSelector
-          options={["option1", "option2"]}
+          options={currentIn.drinks}
           setSelected={setSelected}
         />
       </div>
