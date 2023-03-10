@@ -5,6 +5,8 @@ export interface ISendData {
   userName: string;
   vote: string;
   isBoosted: boolean;
+  drinkChoice : string;
+  roundEndChoice : string;
 }
 
 export interface IReceiveData {
