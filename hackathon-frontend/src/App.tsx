@@ -6,6 +6,7 @@ import { IReceiveData, ISendData } from "./components/types";
 import DrinkVisualization from "./components/DrinkVisualization";
 import Login from "./components/Login";
 import { generateUUID } from "./components/generateUUID";
+import LoadingBar from "./components/LoadingBar";
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -52,6 +53,7 @@ function App() {
         <div className="main-screen">
           <div className="App">
             <div className="project-name">
+              <LoadingBar currentTime={40} totalTime={45} />
               <header>
                 <div>{userName}</div>
                 <div>Round Number: {currentIn?.roundNumber}</div>
