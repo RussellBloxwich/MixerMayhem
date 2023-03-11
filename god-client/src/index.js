@@ -17,8 +17,6 @@ const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
 
-StartRoundSetup();
-
 function StartRoundSetup() {
   // Send viable drink options to frontend
   sockets.emit('drinkOptions', GetDrinkOptions(5, 0));
@@ -26,6 +24,8 @@ function StartRoundSetup() {
   setTimeout(EndRound, roundLengthInMs);
   isRoundActive = true;
 }
+
+StartRoundSetup();
 
 // Handle user selecting or updating their vote, and update front end client
 sockets.on('drinkChoice', (socket) => {
