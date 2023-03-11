@@ -5,16 +5,10 @@ const sockets = io('http://3.25.151.51:3000');
 import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
 import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
-import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 let roundNumber = 1;
-let drinkChance = new Object({
-  drinkName: '',
-  drinkVoteCount: 0,
-  drinkChance: null,
-});
 let votingIsFinished = false;
 let drinkHistory = [];
 let currentVolume = 0;

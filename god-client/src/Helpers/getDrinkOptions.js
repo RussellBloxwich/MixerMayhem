@@ -1,8 +1,8 @@
-import AllowedDrinks from './VolumeCheck.js';
+import VolumeAllowedDrinks from './VolumeAllowedDrinks.js';
 
 function GetDrinkOptions(numberDrinks = 5, currentVolume = 0) {
   var drinkOptions = [];
-  // var drinksList = AllowedDrinks(currentVolume);
+  // var drinksList = VolumeAllowedDrinks(currentVolume);
   var drinksList = [
     'Coke',
     'Milk',
@@ -11,7 +11,6 @@ function GetDrinkOptions(numberDrinks = 5, currentVolume = 0) {
     'Lime juice',
     'Peppermint essence',
   ];
-  let drinkOptions = [];
 
   let GetRandomDrink = () =>
     drinksList[Math.floor(Math.random() * drinksList.length)];
