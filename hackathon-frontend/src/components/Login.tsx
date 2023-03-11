@@ -23,7 +23,7 @@ const Login = ({
 
   return (
     <div className="container">
-      <img className="logo" src="./logo.png" alt="Mixer Mayhem"/>
+      <img className="logo" src="./cropped-logo.png" alt="Mixer Mayhem"/>
       <h1 className="title">{createName()}</h1>
       <input placeholder="Name" onChange={(e) => onChange(e)} value={value} />
       <input
