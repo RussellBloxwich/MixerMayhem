@@ -16,8 +16,9 @@ let drinkChance = new Object({
 let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
+let currentVolume = 0;
 
-socket.emit('drinkOptions', GetDrinkOptions(5));
+socket.emit('drinkOptions', GetDrinkOptions(5, currentVolume));
 
 // Handle user updating their choice
 socket.on('drinkChoice', (socket) => {
