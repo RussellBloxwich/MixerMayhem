@@ -1,11 +1,11 @@
 import VolumeAllowedDrinks from './VolumeAllowedDrinks.js';
 
-function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
+function IsVotingComplete(drinkVotes, currentRound, currentVolume) {
   // Configurables
   const numberOfRounds = 5;
 
   // Check round
-  if (numberOfRounds == CurrentRound) {
+  if (numberOfRounds == currentRound) {
     console.log('Ending drink due to running out of rounds.');
     return true;
   }

@@ -1,6 +1,6 @@
 import VolumeAllowedDrinks from './VolumeAllowedDrinks.js';
 
-export function GetDrinkOptions(numberDrinks, currentVolume) {
+function GetDrinkOptions(numberDrinks, currentVolume) {
   var allowedDrinks = VolumeAllowedDrinks(currentVolume);
   return GetRandomDrink(allowedDrinks, numberDrinks);
 }
@@ -10,7 +10,7 @@ const GetRandomDrink = (allowedDrinks, numberDrinks) => {
   const shuffled = allowedDrinks;
   var l = allowedDrinks.length;
   var i = 0;
-  var temp = "";
+  var temp = '';
 
   while (l--) {
     i = Math.floor(Math.random() * (l + 1));
