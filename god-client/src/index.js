@@ -5,15 +5,15 @@ const sockets = io('http://3.25.151.51:3000');
 import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
 import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
-import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
+import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 1000;
-const delayLengthInMs = 1000;
+const roundLengthInMs = 20_000;
+const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
 
@@ -31,10 +31,12 @@ StartRoundSetup();
 sockets.on('drinkChoice', (socket) => {
   if (!isRoundActive) return;
 
-  drinkVotes = UpdateDrinkVotes(
+  drinkVotes = UpdateDrinkChance(
     drinkVotes,
     socket.drinkChoice,
-    socket.isBoosted
+    socket.isBoosted,
+    roundNumber,
+    socket.id
   );
   let payload = {
     roundNumber,
