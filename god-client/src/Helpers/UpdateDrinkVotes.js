@@ -1,4 +1,4 @@
-function updateDrinkVotes(currentDrinkVotes, drinkChoice, isBoosted) {
+function updateDrinkVotes(currentDrinkVotes, drinkChoice, isBoosted = false) {
   let boostedMultiplier = 2;
   let votesToAdd = isBoosted ? 1 : 1 * boostedMultiplier;
 
