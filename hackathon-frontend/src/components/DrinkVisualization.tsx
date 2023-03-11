@@ -8,7 +8,6 @@ const getValues = () => {
     { name: "coke", percentage: 10, totalVolume: 2, color: "brown" },
     { name: "vodka", percentage: 15, totalVolume: 3, color: "white" },
   ];
-
   return values;
 };
 
@@ -18,23 +17,25 @@ const DrinkVisualization = () => {
   return (
     <div className="bottle">
       {cheese.map((drink, i) => {
-        return (
-          <div
-            key={drink.name + i.toString()}
-            className="drink-selection"
-            style={{
-              height: `${drink.percentage}%`,
-            }}
-          >
+        if (drink.percentage > 0) {
+          return (
             <div
-              className="liqued-background"
+              key={drink.name + i.toString()}
+              className="drink-selection"
               style={{
-                backgroundColor: drink.color,
+                height: `${drink.percentage}%`,
               }}
-            ></div>
-            <div className="liqued-name">{drink.name}</div>
-          </div>
-        );
+            >
+              <div
+                className="liqued-background"
+                style={{
+                  backgroundColor: drink.color,
+                }}
+              ></div>
+              <div className="liqued-name">{drink.name}</div>
+            </div>
+          );
+        }
       })}
     </div>
   );

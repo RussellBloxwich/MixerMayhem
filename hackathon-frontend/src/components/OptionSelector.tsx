@@ -12,13 +12,17 @@ const OptionSelector = ({ options, setSelected, selected }: IOptions) => {
     <div className="option-selector">
       {options.map((option, i) => {
         return (
-          <button className={`${selected === option.drinkName ? "selected" : ""}`}
+          <button
+            className={`${
+              selected === option.drinkName ? "selected " : ""
+            } drink-option`}
             key={option.drinkName + i.toString}
             onClick={() => {
               setSelected(option.drinkName);
             }}
           >
-            {option.drinkName} Chance: {option.drinkChance}
+            <div>{option.drinkName}</div>{" "}
+            <div>Chance: {option.drinkChance}%</div>
           </button>
         );
       })}
