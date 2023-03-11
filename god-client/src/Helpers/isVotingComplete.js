@@ -1,4 +1,4 @@
-import { allowedDrinks } from './volumeCheck';
+import AllowedDrinks from './VolumeCheck.js';
 
 function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
   // Configurables
@@ -11,10 +11,12 @@ function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
   }
 
   // Check volume
-  if (!AllowedDrinks(currentVolume)) {
-    console.log('Ending drink due to too much volume.');
-    return true;
-  }
+  // TODO: Fix code. This doesn't work
+  // if (!AllowedDrinks(currentVolume)) {
+  //   console.log('Ending drink due to too much volume.');
+  //   return true;
+  // }
+
   // Check votes to end
   var endRoundTally;
   var totalVotes = 0;
