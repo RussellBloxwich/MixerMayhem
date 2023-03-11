@@ -17,6 +17,7 @@ let drinkChance = new Object({
 let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
+let currentVolume = 0;
 const roundLengthInMs = 1500;
 
 sockets.emit('drinkOptions', GetDrinkOptions(5));
@@ -35,9 +36,6 @@ sockets.on('drinkChoice', (socket) => {
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
-  sockets.forEach((socket) => {
-    drinkVotes = UpdateDrinkVotes(drinkVotes, socket.drinkChoice, isBoosted);
-  });
   let voteResult = GetVoteResult();
   votingIsFinished = IsVotingComplete();
   round++;
