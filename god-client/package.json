@@ -1,0 +1,17 @@
+{
+  "name": "god-client",
+  "version": "1.0.0",
+  "description": "Client to take in user client data, apply business logic, and transmit back to hardware and frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node": "^19.6.1",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1"
+  },
+  "type": "module"
+}

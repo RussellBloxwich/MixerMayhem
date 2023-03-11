@@ -1,1 +1,1 @@
-This is the 'God client subrepo', for business logic and communicating with hardware. See the websocket subrepo for websocket logic and frontend subrepo for frontend logic.
+This is the 'God client' subrepo, for business logic and communicating with hardware. See the websocket subrepo for websocket logic and frontend subrepo for frontend logic.

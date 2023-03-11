@@ -1,11 +1,12 @@
-const socket = io('3.25.151.51:3000');
+import { io } from 'socket.io-client';
+const socket = io('http://3.25.151.51:3000');
 
 // Imports and initialisation
-import GetDrinkOptions from './Helpers/GetDrinkOptions';
-import GetVoteResult from './Helpers/GetVoteResult';
-import IsVotingComplete from './Helpers/IsVotingComplete';
-import SendProtocolToHardware from './Helpers/SendProtocolToHardware';
-import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes';
+import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
+import GetVoteResult from './Helpers/GetVoteResult.js';
+import IsVotingComplete from './Helpers/IsVotingComplete.js';
+import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
+import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
 
 let roundNumber = 1;
 let drinkChance = new Object({
