@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
-import { getData } from "./components/InputOutput";
+import { useGetDrinkOptions, getVoteData } from "./components/InputOutput";
 import { IReceiveData, ISendData } from "./components/types";
 import DrinkVisualization from "./components/DrinkVisualization";
 import Login from "./components/Login";
@@ -11,7 +11,9 @@ import LoadingBar from "./components/LoadingBar";
 function App() {
   const [userName, setUserName] = useState("");
   const [selected, setSelected] = useState<string>("");
-  const [currentIn, setCurrentIn] = useState<IReceiveData>(getData());
+  const [roundOptions, setRoundOptions] = useState<string[]>([]);
+  useGetDrinkOptions(setRoundOptions);
+  const [currentIn, setCurrentIn] = useState<IReceiveData>(getVoteData());
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
     drinkChoice: "",
@@ -50,13 +52,6 @@ function App() {
     <>
       {userName === "" && <Login setUserName={setUserName} />}
 
-
-
-
-
-
-
-
       
       {userName !== "" && (
         <div className="main-screen">
@@ -83,7 +78,7 @@ function App() {
               </button>
             </div>
             <OptionSelector
-              options={currentIn?.drinks}
+              options={roundOptions}
               setSelected={setSelected}
               selected={selected || ""}
               handleChoice={handleChoice}

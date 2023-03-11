@@ -2,7 +2,7 @@ import React from "react";
 import "./OptionSelector.css";
 
 interface IOptions {
-  options: { drinkName: string; drinkChance: number }[];
+  options: string[];
   setSelected: React.Dispatch<React.SetStateAction<string>>;
   selected: string;
   handleChoice: () => void;
@@ -15,30 +15,32 @@ const OptionSelector = ({
   handleChoice,
 }: IOptions) => {
   return (
+    options ?
     <div className="option-selector">
       {options.map((option, i) => {
         if (
-          !(option.drinkName === "finish drink") &&
-          !(option.drinkName === "skip round")
+          !(option === "finish drink") &&
+          !(option === "skip round")
         ) {
           return (
             <button
               className={`${
-                selected === option.drinkName ? "selected " : ""
+                selected === option ? "selected " : ""
               } drink-option`}
-              key={option.drinkName + i.toString}
+              key={option + i.toString}
               onClick={() => {
-                setSelected(option.drinkName);
+                setSelected(option);
                 handleChoice();
               }}
             >
-              <div>{option.drinkName}</div>{" "}
-              <div>Chance: {option.drinkChance}%</div>
+              <div>{option}</div>{" "}
+              <div>Chance: {option}%</div>
             </button>
           );
         }
       })}
     </div>
+    : <div>Options will show when a new round starts.</div>
   );
 };
 

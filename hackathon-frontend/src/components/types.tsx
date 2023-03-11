@@ -11,7 +11,7 @@ export interface ISendData {
 
 export interface IReceiveData {
   roundNumber: number;
-  drinks: { drinkName: string; drinkChance: number }[];
+  drinks: { drinkName: string; drinkVoteCount: number; drinkChance: number }[];
   isFinished: boolean;
   addedDrinks : string[]
 }
