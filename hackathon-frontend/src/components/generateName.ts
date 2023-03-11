@@ -25,7 +25,7 @@ const finalWord = " Microwave Machine";
 export const generateName = (length: number): string => {
   length = length - 3;
   const nameList: string[] = [];
-  const shuffled = wordList.slice(0);
+  const shuffled = wordList;
   var l = wordList.length;
   var i = 0;
   var temp = "";
