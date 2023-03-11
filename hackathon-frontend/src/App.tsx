@@ -55,8 +55,8 @@ function App() {
             <div className="project-name">
               <LoadingBar currentTime={40} totalTime={45} />
               <header>
-                <div>{userName}</div>
-                <div>Round Number: {currentIn?.roundNumber}</div>
+                <div>User Name: {userName}</div>
+                <div>Round Number: {currentIn.roundNumber}</div>
               </header>
               <button
                 className="increase-vote"
