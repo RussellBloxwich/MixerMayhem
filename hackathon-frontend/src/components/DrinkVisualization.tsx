@@ -1,5 +1,6 @@
 import { stringify } from "querystring";
 import React from "react";
+// import BottleSVG from "./Bottlesvg";
 import "./DrinkVisualization.css";
 
 const getValues = () => {
@@ -7,7 +8,6 @@ const getValues = () => {
     { name: "orange juice", percentage: 50, totalVolume: 2, color: "orange" },
     { name: "coke", percentage: 10, totalVolume: 2, color: "brown" },
     { name: "vodka", percentage: 15, totalVolume: 3, color: "white" },
-    
   ];
   return values;
 };
@@ -17,6 +17,7 @@ const DrinkVisualization = () => {
 
   return (
     <div className="bottle">
+      {/* <div className="bottle-svg"><BottleSVG /> </div> */}
       {cheese.map((drink, i) => {
         if (drink.percentage > 0) {
           return (
