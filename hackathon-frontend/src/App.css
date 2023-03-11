@@ -87,6 +87,10 @@ video {
   vertical-align: baseline;
 }
 
+button {
+  cursor: pointer;
+}
+
 .main-screen {
   height: 100vh;
   display: flex;
@@ -133,8 +137,10 @@ footer {
 }
 
 .skip-finish-button {
-  padding: 1em;
+  padding: 0.5em;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 0.2em;
 }

@@ -29,6 +29,20 @@ function App() {
     });
   };
 
+  var finishDrinkPercentage = 0;
+  currentIn.drinks.forEach((drink) => {
+    if (drink.drinkName === "finish drink") {
+      finishDrinkPercentage = drink.drinkChance;
+    }
+  });
+
+  var nextRoundPercentage = 0;
+  currentIn.drinks.forEach((drink) => {
+    if (drink.drinkName === "skip round") {
+      nextRoundPercentage = drink.drinkChance;
+    }
+  });
+
   return (
     <div className="main-screen">
       <div className="App">
@@ -59,20 +73,26 @@ function App() {
       </div>
       <footer>
         <button
-          className="skip-finish-button"
+          className={`${
+            selected === "skip" ? "selected " : ""
+          } skip-finish-button`}
           onClick={() => {
             setSelected("skip");
           }}
         >
-          Skip Round
+          <div>Skip Round</div>
+          <div>{nextRoundPercentage}%</div>
         </button>
         <button
-          className="skip-finish-button"
+          className={`${
+            selected === "finish" ? "selected " : ""
+          } skip-finish-button`}
           onClick={() => {
             setSelected("finish");
           }}
         >
-          Finish Drink
+          <div>Finish Drink</div>
+          <div>{finishDrinkPercentage}%</div>
         </button>
       </footer>
     </div>
