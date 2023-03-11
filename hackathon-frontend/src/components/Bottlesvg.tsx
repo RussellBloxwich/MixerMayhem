@@ -5,14 +5,14 @@ const BottleSVG = () => {
     <svg
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
-      width="440px"
-      height="900px"
+      width="8em"
+      height="16em"
       viewBox="0 0 440 900"
       preserveAspectRatio="xMidYMid meet"
     >
       <g
         transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
-        fill="#000000"
+        fill="#E0F1E4"
         stroke="none"
       >
         <path
