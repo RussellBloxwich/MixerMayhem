@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "./login.css";
-import generateName from "./generateGroupName";
+import generateName from "./generateName";
 
 const Login = ({
   setUserName,
