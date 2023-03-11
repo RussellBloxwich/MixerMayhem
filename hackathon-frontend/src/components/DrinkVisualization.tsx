@@ -15,11 +15,12 @@ import { getDrinkQuantities } from "./getDrinkQuantities";
 // return values;
 // };
 
-const values2 = ["Tabasco", "Coke", "Milk", "Soy", "Tabasco", "Soy"];
+const values2 = ["Tabasco", "Coke", "Milk", "Soy", "Tabasco", "Soy", "Heat"];
 
 const DrinkVisualization = ({ data }: { data: IReceiveData }) => {
-  const cheese2 = getDrinkArray(data.addedDrinks);
+  // const cheese2 = getDrinkArray(data.addedDrinks);
   const cheese = getDrinkQuantities(data.addedDrinks);
+  // const cheese = getDrinkQuantities(values2);
 
   return (
     <div className="bottle">
