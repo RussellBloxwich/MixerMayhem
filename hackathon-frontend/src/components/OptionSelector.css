@@ -8,3 +8,10 @@
 .selected {
   background-color: darkgray;
 }
+
+.drink-option {
+  padding-left: 2em;
+  padding-right: 2em;
+  display: flex;
+  justify-content: space-between;
+}
