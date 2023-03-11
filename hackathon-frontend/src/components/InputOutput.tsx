@@ -21,6 +21,7 @@ let data: IReceiveData = {
     { drinkName: "Lemon juice", drinkVoteCount: 0, drinkChance: 12 },
     { drinkName: "Peppermint", drinkVoteCount: 0, drinkChance: 11 },
     { drinkName: "Soy sauce", drinkVoteCount: 0, drinkChance: 0 },
+    { drinkName: "Heat", drinkVoteCount: 0, drinkChance: 0 },
     { drinkName: "Mix", drinkVoteCount: 0, drinkChance: 0 },
     { drinkName: "Skip", drinkVoteCount: 0, drinkChance: 0 },
     { drinkName: "Finish Drink", drinkVoteCount: 0,  drinkChance: 0 },
