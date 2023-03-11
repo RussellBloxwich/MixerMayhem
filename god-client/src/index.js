@@ -12,8 +12,8 @@ import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 20_000;
-const delayLengthInMs = 30_000;
+const roundLengthInMs = 2_000;
+const delayLengthInMs = 3_000;
 let drinkVotes;
 let isRoundActive = false;
 

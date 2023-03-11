@@ -15,9 +15,7 @@ function UpdateDrinkChance(
 
   // See if the user has already voted this round
   // If so, remove their old vote before continuing
-  if (round == 1) {
-    var whoHasVoted = { 'Round 1': [] };
-  }
+  var whoHasVoted = { 'Round 1': [] };
   whoHasVoted[`Round ${round}`] = [];
   if (Object.keys(whoHasVoted[`Round ${round}`]).includes(userId)) {
     let choiceName = whoHasVoted[`Round ${round}`].userId;
