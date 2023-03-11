@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
 import { getData } from "./components/InputOutput";
@@ -65,6 +65,7 @@ function App() {
                 }}
                 onClick={() => {
                   setIncreasePower(!increasePower);
+                  handleChoice();
                 }}
               >
                 Increase Vote Power: {increasePower ? " Active" : " Inactive"}
@@ -74,6 +75,7 @@ function App() {
               options={currentIn?.drinks}
               setSelected={setSelected}
               selected={selected || ""}
+              handleChoice={handleChoice}
             />
           </div>
           <div className="drink-visualization-wrapper">
@@ -86,6 +88,7 @@ function App() {
               } skip-finish-button`}
               onClick={() => {
                 setSelected("skip");
+                handleChoice();
               }}
             >
               <div>Skip Round</div>
@@ -97,6 +100,7 @@ function App() {
               } skip-finish-button`}
               onClick={() => {
                 setSelected("finish");
+                handleChoice();
               }}
             >
               <div>Finish Drink</div>
