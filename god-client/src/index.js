@@ -8,17 +8,20 @@ import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
-import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 let roundNumber = 1;
+let drinkChance = new Object({
+  drinkName: '',
+  drinkVoteCount: 0,
+  drinkChance: null,
+});
+let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
 let currentVolume = 0;
-let isBoosted = false;
-const roundLengthInMs = 20000;
+const roundLengthInMs = 1500;
 
-sockets.emit('drinkOptions', GetDrinkOptions(5, 0));
+sockets.emit('drinkOptions', GetDrinkOptions(5));
 
-let drinkVotes = SetUpDrinkVotes();
 setTimeout(EndRound, roundLengthInMs);
 
 // Handle user selecting or updating their vote, and update front end client
@@ -28,16 +31,14 @@ sockets.on('drinkChoice', (socket) => {
     roundNumber,
     drinkVotes,
   };
-  console.log('Mid-round payload for front end: ', payload);
   sockets.emit('drinkChoiceData', payload);
 });
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
-  console.log('EndRound has been triggered.');
   let voteResult = GetVoteResult();
   votingIsFinished = IsVotingComplete();
-  roundNumber++;
+  round++;
 
   // Update frontend client
   let payload = {
@@ -47,13 +48,9 @@ function EndRound() {
     drinkHistory: drinkHistory.push(voteResult),
     lastChosen: voteResult,
   };
-
-  console.log('End-of-round payload for front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  SendProtocolToHardware(voteResult);
-
-  drinkVotes = SetUpDrinkVotes(); // Clear old votes
+  // Send drink choice to hardware (TODO)
 
   if (votingIsFinished) HandleDrinkEnd();
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
 import { getData } from "./components/InputOutput";
@@ -20,20 +20,6 @@ function App() {
     roundEndChoice: "",
   });
   const [increasePower, setIncreasePower] = useState(false);
-
-  const socket = new WebSocket("ws://3.25.151.51:3000");
-
-  useEffect(() => {
-    const checkSocket = () => {
-      getData();
-      // console.log("fetching");
-    };
-    window.addEventListener("mousemove", checkSocket);
-
-    return () => {
-      window.removeEventListener("mousemove", checkSocket);
-    };
-  }, []);
 
   console.log(selected);
 

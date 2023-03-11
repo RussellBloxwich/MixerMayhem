@@ -1,3 +1,3 @@
-function SendProtocolToHardware(voteResult) {}
+function SendProtocolToHardware() {}
 
 export default SendProtocolToHardware;
