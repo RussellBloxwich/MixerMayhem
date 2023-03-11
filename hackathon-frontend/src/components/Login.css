@@ -21,7 +21,7 @@
     margin-bottom: 20px;
     text-align: center;
     font-family: 'freemetto', sans-serif;
-    animation: rainbow 4s linear infinite;
+    animation: rainbow 4s linear infinite alternate;
   }
   
   /* Input */
