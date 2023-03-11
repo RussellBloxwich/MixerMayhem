@@ -3,5 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.6em;
-  padding: 1em;
+}
+
+.selected {
+  background-color: darkgray;
 }
