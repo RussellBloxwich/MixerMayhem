@@ -1,4 +1,4 @@
-import AllowedDrinks from './VolumeCheck.js';
+import { allowedDrinks } from './volumeCheck';
 
 function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
   // Configurables
@@ -15,7 +15,6 @@ function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
     console.log('Ending drink due to too much volume.');
     return true;
   }
-
   // Check votes to end
   var endRoundTally;
   var totalVotes = 0;
