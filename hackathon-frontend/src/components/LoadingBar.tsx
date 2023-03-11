@@ -9,7 +9,6 @@ const LoadingBar = ({
   totalTime: number;
 }) => {
   const currentPercentage = Math.round((currentTime * 100) / totalTime);
-  console.log(currentPercentage);
  
   
   return (
