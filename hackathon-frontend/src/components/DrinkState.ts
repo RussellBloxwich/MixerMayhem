@@ -32,7 +32,7 @@ export const getDrinkArray = (drinkList: Array<string>):Array<DrinkPercentage> =
 
 
 const readDrinkStateList = (drinkList: Array<string>) => {
-    // Tally up distributions
+    // Tally up drinks
     for (const drink of drinkList) { 
         if (drinkAlreadyTallied(drink)) {
             drinkVolumeList[drink] += findDrinkVolume(drink);
@@ -40,6 +40,7 @@ const readDrinkStateList = (drinkList: Array<string>) => {
             drinkVolumeList[drink] = findDrinkVolume(drink);
         }
     }
+    // Remove init value
     delete drinkVolumeList['init'];
 
     // Find total volume
@@ -50,7 +51,6 @@ const readDrinkStateList = (drinkList: Array<string>) => {
     if (totalVolume === 0) {totalVolume = 1}
 
     // create percentage state array
-
     for (const drink in drinkVolumeList) {
         const drinkPercentageData: DrinkPercentage = {
             name: drink,
@@ -60,6 +60,7 @@ const readDrinkStateList = (drinkList: Array<string>) => {
         };  
         drinkPercentageState.push(drinkPercentageData);
     }
+    // Remove init value
     drinkPercentageState.splice(0, 1)
 }
 
