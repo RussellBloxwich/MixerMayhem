@@ -28,21 +28,11 @@ const TOTALQUANTITY = 600;
 export const getDrinkQuantities = (drinks: string[]) => {
   const toReturn = drinks.map((e: string) => {
     const drinkData = DRINKQUANTITIES.find((d) => {
-      console.log(d.name, e);
       if (d.name === e) {
         return d;
       }
     });
-    console.log("Drink Data: ", drinkData);
     const percentage = drinkData ? drinkData.volume / TOTALQUANTITY : 0;
-    console.log(
-      "Drink:",
-      e,
-      "    percentage:",
-      percentage * 100,
-      "DrinkData:",
-      drinkData
-    );
     return {
       name: e,
       percentage: percentage * 100,
@@ -50,6 +40,5 @@ export const getDrinkQuantities = (drinks: string[]) => {
       colour: drinkData ? drinkData.colour : "",
     };
   });
-  console.log("Returning: ", toReturn);
   return toReturn;
 };
