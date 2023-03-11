@@ -1,6 +1,6 @@
-function GetDrinkOptions(numberDrinks) {
-  var drinksList = [];
-  var drinkOptions = ['Coke', 'Water', 'Oil', 'Vanilla essence', 'Red bull'];
+function GetDrinkOptions(numberDrinks, currentVolume) {
+  var drinksList = allowedDrinks(currentVolume);
+  
   var GetRandomDrink = () =>
     drinksList[Math.floor(Math.random() * drinksList.length)];
 

@@ -17,6 +17,7 @@ let drinkChance = new Object({
 let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
+let currentVolume = 0;
 const roundLengthInMs = 1500;
 
 sockets.emit('drinkOptions', GetDrinkOptions(5));
