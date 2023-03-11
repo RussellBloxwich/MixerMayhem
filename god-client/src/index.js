@@ -56,17 +56,19 @@ sockets.on('drinkChoice', (socket) => {
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
-  console.log(`EndRound (round ${roundNumber}) has been triggered.`);
-  let voteResult = GetVoteResult();
+  console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
+  let voteResult = GetVoteResult(drinkVotes);
+  console.log(`The vote result was ${voteResult.drinkName}.\n`);
   votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
+  drinkHistory.push(voteResult);
 
   // Update frontend client
   let payload = {
     roundNumber,
     drinkVotes,
     votingIsFinished,
-    drinkHistory: drinkHistory.push(voteResult),
-    lastChosen: voteResult ?? null,
+    drinkHistory,
+    lastChosen: voteResult.drinkName ?? null,
   };
   roundNumber++;
 
