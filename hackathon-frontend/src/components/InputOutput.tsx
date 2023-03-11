@@ -1,4 +1,6 @@
 import { IReceiveData } from "./types";
+import { io } from 'socket.io-client';
+const sockets = io('http://3.25.151.51:3000');
 
 interface IGetData {
   current: IReceiveData | undefined;
@@ -6,6 +8,16 @@ interface IGetData {
 }
 
 export const getData = (): IReceiveData => {
+  console.log("Entered InputOutput.");
+
+  sockets.on('drinkChoice', (socket) => {
+    console.log(socket);
+  });
+
+  sockets.on('drinkChoiceData', (socket) => {
+    console.log(socket);
+  });
+
   const test: IReceiveData = {
     roundNumber: 4,
     drinks: [
@@ -20,32 +32,6 @@ export const getData = (): IReceiveData => {
     isFinished: false,
     addedDrinks: ["tobasco", "mayonnaise", "vodka", "apple juice"],
   };
-
-  // const socket = new WebSocket("ws://3.25.151.51:3000");
-  // var data;
-
-  // socket.onopen = () => {
-  //   console.log("WebSocket connection established.");
-  // };
-
-  // socket.onmessage = (event) => {
-  //   console.log("Received WebSocket message:", event.data);
-  //   console.log("DATA", JSON.parse(event.data));
-  //   var data = JSON.parse(event.data);
-  //   // setCurrentIn(JSON.parse(event.data));
-  //   console.log("DATA", data);
-  // };
-  // console.log("DATA", data);
-
-  // socket.onclose = () => {
-  //   console.log("WebSocket connection closed.");
-  // };
-
-  // //  return () => {
-  // //     socket.close();
-  // // };
-
-  // console.log("Got data");
 
   return test;
 };

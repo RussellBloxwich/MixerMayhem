@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
-import { getData } from "./components/inputOutput";
+import { getData } from "./components/InputOutput";
 import { IReceiveData, ISendData } from "./components/types";
 import DrinkVisualization from "./components/DrinkVisualization";
 import Login from "./components/Login";
