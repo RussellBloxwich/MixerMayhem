@@ -1,3 +1,4 @@
+import { stringify } from "querystring";
 import react from "react";
 import "./DrinkVisualization.css";
 
@@ -16,10 +17,10 @@ const DrinkVisualization = () => {
 
   return (
     <div className="bottle">
-      {cheese.map((drink) => {
+      {cheese.map((drink, i) => {
         return (
           <div
-            key={drink.name}
+            key={drink.name + i.toString()}
             className="drink-selection"
             style={{
               height: `${drink.percentage}%`,

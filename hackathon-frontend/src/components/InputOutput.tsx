@@ -12,6 +12,8 @@ export const getData = (): IReceiveData => {
       { drinkName: "Coke", drinkChance: 10 },
       { drinkName: "vanilla essence", drinkChance: 9 },
       { drinkName: "ice", drinkChance: 24 },
+      { drinkName: "vinegar", drinkChance: 24 },
+      { drinkName: "mix", drinkChance: 24 },
     ],
     isFinished: false,
     addedDrinks: ["tobasco", "mayonnaise", "vodka", "apple juice"],

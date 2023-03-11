@@ -95,6 +95,10 @@ video {
   align-items: center;
 }
 
+.increase-vote {
+  padding: 0.5em;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -108,13 +112,14 @@ video {
   align-items: center;
   justify-content: center;
   margin: 2em;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .drink-visualization-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid pink;
 }
 
 footer {
@@ -123,6 +128,8 @@ footer {
   padding-left: 2em;
   padding-right: 2em;
   padding-bottom: 1em;
+  width: 90%;
+  margin-top: 1em;
 }
 
 .skip-finish-button {
