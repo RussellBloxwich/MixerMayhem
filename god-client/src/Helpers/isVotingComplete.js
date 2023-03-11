@@ -6,11 +6,13 @@ function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
 
   // Check round
   if (numberOfRounds == CurrentRound) {
+    console.log('Ending drink due to running out of rounds.');
     return true;
   }
 
   // Check volume
   if (!AllowedDrinks(currentVolume)) {
+    console.log('Ending drink due to too much volume.');
     return true;
   }
 
@@ -25,6 +27,7 @@ function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
   }
 
   if (2 * endRoundTally > totalVotes) {
+    console.log('Ending drink due to popular vote.');
     return true;
   }
 

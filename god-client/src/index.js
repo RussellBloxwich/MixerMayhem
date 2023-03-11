@@ -28,13 +28,16 @@ sockets.on('drinkChoice', (socket) => {
     roundNumber,
     drinkVotes,
   };
-  console.log('Mid-round payload for front end: ', payload);
+  console.log(
+    `Mid-round (round ${roundNumber}) payload to send to front end: `,
+    payload
+  );
   sockets.emit('drinkChoiceData', payload);
 });
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
-  console.log('EndRound has been triggered.');
+  console.log(`EndRound (round ${roundNumber}) has been triggered.`);
   let voteResult = GetVoteResult();
   votingIsFinished = IsVotingComplete();
   roundNumber++;
@@ -45,10 +48,10 @@ function EndRound() {
     drinkVotes,
     votingIsFinished,
     drinkHistory: drinkHistory.push(voteResult),
-    lastChosen: voteResult,
+    lastChosen: voteResult ?? null,
   };
 
-  console.log('End-of-round payload for front end: ', payload);
+  console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
   SendProtocolToHardware(voteResult);
