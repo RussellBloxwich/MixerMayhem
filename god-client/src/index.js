@@ -5,7 +5,7 @@ const sockets = io('http://3.25.151.51:3000');
 import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
 import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
-import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
+import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 // import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
@@ -36,10 +36,12 @@ StartRoundSetup();
 sockets.on('drinkChoice', (socket) => {
   if (!isRoundActive) return;
 
-  drinkVotes = UpdateDrinkVotes(
+  drinkVotes = UpdateDrinkChance(
     drinkVotes,
     socket.drinkChoice,
-    socket.isBoosted
+    socket.isBoosted,
+    roundNumber,
+    socket.id
   );
   let payload = {
     roundNumber,
@@ -56,8 +58,7 @@ sockets.on('drinkChoice', (socket) => {
 function EndRound() {
   console.log(`EndRound (round ${roundNumber}) has been triggered.`);
   let voteResult = GetVoteResult();
-  votingIsFinished = IsVotingComplete();
-  roundNumber++;
+  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
 
   // Update frontend client
   let payload = {
@@ -67,6 +68,7 @@ function EndRound() {
     drinkHistory: drinkHistory.push(voteResult),
     lastChosen: voteResult ?? null,
   };
+  roundNumber++;
 
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
@@ -74,9 +76,10 @@ function EndRound() {
   // SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
-  if (votingIsFinished) HandleDrinkEnd();
-
-  isRoundActive = false;
-
-  // setTimeout(StartRoundSetup, delayLengthInMs);
+  if (votingIsFinished) {
+    HandleDrinkEnd();
+  } else {
+    isRoundActive = false;
+    setTimeout(StartRoundSetup, delayLengthInMs);
+  }
 }

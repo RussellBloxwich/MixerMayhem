@@ -2,8 +2,10 @@ import GetDrinkOptions from './GetDrinkOptions.js';
 
 function SetUpDrinkVotes(drinkOptions) {
   let drinkVotes = [];
-  console.log(`Drink options: ${drinkOptions}`);
-  drinkOptions.forEach((element) => {
+  let allOptions = [...drinkOptions, 'Skip', 'Finish Drink', 'Rotate'];
+
+  console.log(`Drink and action options: ${allOptions}`);
+  allOptions.forEach((element) => {
     drinkVotes.push({
       drinkName: element,
       drinkVoteCount: 0,

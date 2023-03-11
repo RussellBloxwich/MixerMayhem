@@ -13,7 +13,7 @@ const GetRandomDrink = (allowedDrinks, numberDrinks) => {
   const shuffled = allowedDrinks;
   var l = allowedDrinks.length;
   var i = 0;
-  var temp = "";
+  var temp = '';
 
   while (l--) {
     i = Math.floor(Math.random() * (l + 1));
