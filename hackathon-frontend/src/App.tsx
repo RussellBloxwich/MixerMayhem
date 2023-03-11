@@ -7,9 +7,11 @@ import DrinkVisualization from "./components/DrinkVisualization";
 import Login from "./components/Login";
 import { generateUUID } from "./components/generateUUID";
 import LoadingBar from "./components/LoadingBar";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [userName, setUserName] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
@@ -50,10 +52,10 @@ function App() {
 
   return (
     <>
-      {userName === "" && <Login setUserName={setUserName} />}
+      {userName === "" && !loading && <Login setUserName={setUserName} />}
+      {loading && userName !== "" && <LoadingScreen username={userName} />}
 
-      
-      {userName !== "" && (
+      {userName !== "" && !loading && (
         <div className="main-screen">
           <div className="App">
             <div className="project-name">
