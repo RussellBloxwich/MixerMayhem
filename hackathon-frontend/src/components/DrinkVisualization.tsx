@@ -4,18 +4,22 @@ import BottleSVG from "./Bottlesvg";
 import "./DrinkVisualization.css";
 import { IReceiveData } from "./types";
 import getDrinkArray from "./DrinkState";
+import { getDrinkQuantities } from "./getDrinkQuantities";
 
 // const getValues = () => {
-//   const values = [
-//     { name: "orange juice", percentage: 80, totalVolume: 2, color: "orange" },
-//     { name: "coke", percentage: 10, totalVolume: 2, color: "brown" },
-//     { name: "vodka", percentage: 10, totalVolume: 3, color: "white" },
-//   ];
-//   return values;
+// const values = [
+//   { name: "orange juice", percentage: 80, totalVolume: 2, color: "orange" },
+//   { name: "coke", percentage: 10, totalVolume: 2, color: "brown" },
+//   { name: "vodka", percentage: 10, totalVolume: 3, color: "white" },
+// ];
+// return values;
 // };
 
+const values2 = ["Tabasco", "Coke", "Milk", "Soy", "Tabasco", "Soy"];
+
 const DrinkVisualization = ({ data }: { data: IReceiveData }) => {
-  const cheese = getDrinkArray(data.addedDrinks);
+  const cheese2 = getDrinkArray(data.addedDrinks);
+  const cheese = getDrinkQuantities(data.addedDrinks);
 
   return (
     <div className="bottle">
