@@ -91,6 +91,14 @@ button {
   cursor: pointer;
 }
 
+header {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
 .main-screen {
   height: 100vh;
   display: flex;
@@ -118,6 +126,7 @@ button {
   margin: 2em;
   flex-direction: column;
   gap: 0.5em;
+  width: 100%;
 }
 
 .drink-visualization-wrapper {
@@ -129,8 +138,8 @@ button {
 footer {
   display: flex;
   justify-content: space-between;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
   padding-bottom: 1em;
   width: 90%;
   margin-top: 1em;
