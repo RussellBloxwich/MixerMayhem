@@ -5,9 +5,15 @@ interface IOptions {
   options: { drinkName: string; drinkChance: number }[];
   setSelected: React.Dispatch<React.SetStateAction<string>>;
   selected: string;
+  handleChoice: () => void;
 }
 
-const OptionSelector = ({ options, setSelected, selected }: IOptions) => {
+const OptionSelector = ({
+  options,
+  setSelected,
+  selected,
+  handleChoice,
+}: IOptions) => {
   return (
     <div className="option-selector">
       {options.map((option, i) => {
@@ -23,6 +29,7 @@ const OptionSelector = ({ options, setSelected, selected }: IOptions) => {
               key={option.drinkName + i.toString}
               onClick={() => {
                 setSelected(option.drinkName);
+                handleChoice();
               }}
             >
               <div>{option.drinkName}</div>{" "}
