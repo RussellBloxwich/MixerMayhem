@@ -35,9 +35,6 @@ sockets.on('drinkChoice', (socket) => {
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
-  sockets.forEach((socket) => {
-    drinkVotes = UpdateDrinkVotes(drinkVotes, socket.drinkChoice, isBoosted);
-  });
   let voteResult = GetVoteResult();
   votingIsFinished = IsVotingComplete();
   round++;
