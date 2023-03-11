@@ -7,7 +7,7 @@ import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
-import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
+// import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 let roundNumber = 1;
 let votingIsFinished = false;
@@ -16,12 +16,17 @@ const roundLengthInMs = 20_000;
 const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
+let actions = {
+  "hasMixed": false,
+  "hasHeated": false
+}
 
 function StartRoundSetup() {
   // Send viable drink options to frontend
-  sockets.emit('drinkOptions', GetDrinkOptions(5, 0));
-  drinkVotes = SetUpDrinkVotes();
-  setTimeout(EndRound, roundLengthInMs);
+  const initialDrinkOptions = GetDrinkOptions(5, 0, false)
+  sockets.emit('drinkOptions', initialDrinkOptions);
+  drinkVotes = SetUpDrinkVotes(initialDrinkOptions);
+  // setTimeout(EndRound, roundLengthInMs);
   isRoundActive = true;
 }
 
@@ -68,7 +73,7 @@ function EndRound() {
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  SendProtocolToHardware(voteResult);
+  // SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
   if (votingIsFinished) {

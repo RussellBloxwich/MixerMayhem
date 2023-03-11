@@ -1,8 +1,11 @@
 import VolumeAllowedDrinks from './VolumeAllowedDrinks.js';
 
-function GetDrinkOptions(numberDrinks, currentVolume) {
+export function GetDrinkOptions(numberDrinks, currentVolume, actions) {
   var allowedDrinks = VolumeAllowedDrinks(currentVolume);
-  return GetRandomDrink(allowedDrinks, numberDrinks);
+  if (actions[0] && actions[1]) {return GetRandomDrink(allowedDrinks, numberDrinks)};
+
+  return GetRandomDrink(allowedDrinks, numberDrinks - 1).concat(addActions(actions));
+
 }
 
 const GetRandomDrink = (allowedDrinks, numberDrinks) => {
@@ -25,5 +28,17 @@ const GetRandomDrink = (allowedDrinks, numberDrinks) => {
 
   return drinkList;
 };
+
+const addActions = (actions) => {
+  var actionList = [];
+  if (!actions[0]) {actionList.push("Mix")}
+  if (!actions[1]) {actionList.push("Heat")}
+
+  if (actionList.length == 2) {
+  return Math.floor(Math.random()*2) >= 1 ? actionList[1] : actionList[0];
+  } 
+
+  return actionList[0];
+}
 
 export default GetDrinkOptions;

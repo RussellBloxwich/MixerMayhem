@@ -1,8 +1,7 @@
 import GetDrinkOptions from './GetDrinkOptions.js';
 
-function SetUpDrinkVotes() {
+function SetUpDrinkVotes(drinkOptions) {
   let drinkVotes = [];
-  let drinkOptions = GetDrinkOptions(5, 0);
   let allOptions = [...drinkOptions, 'Skip', 'Finish Drink', 'Rotate'];
 
   console.log(`Drink and action options: ${allOptions}`);
