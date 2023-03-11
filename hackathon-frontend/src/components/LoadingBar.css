@@ -2,9 +2,10 @@
   width: 100%;
   width: 20em;
   height: 2em;
-  background-color: var(--main-color);
+  /* background-color: var(--main-color); */
   border-radius: 0.9em;
   overflow: hidden;
+  border: 2px solid black;
 }
 
 .progress-bar {
