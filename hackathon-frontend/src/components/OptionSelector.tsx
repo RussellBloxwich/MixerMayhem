@@ -1,11 +1,13 @@
 import React from "react";
 import "./OptionSelector.css";
+import { IReceiveData } from "./types";
 
 interface IOptions {
   options: string[];
   setSelected: React.Dispatch<React.SetStateAction<string>>;
   selected: string;
   handleChoice: () => void;
+  voteData: any | undefined;
 }
 
 const OptionSelector = ({
@@ -13,7 +15,9 @@ const OptionSelector = ({
   setSelected,
   selected,
   handleChoice,
+  voteData
 }: IOptions) => {
+  console.log('voteData', voteData)
   return (
     options ?
     <div className="option-selector">
@@ -34,7 +38,7 @@ const OptionSelector = ({
               }}
             >
               <div>{option}</div>{" "}
-              <div>Chance: {option}%</div>
+              <div>Chance: {voteData?.drinkChance ?? "0"}%</div>
             </button>
           );
         }

@@ -33,20 +33,22 @@ let data: IReceiveData = {
 export const useGetDrinkOptions = (setRoundOptions: (options: string[]) => void) => {
   useEffect(() => {
     sockets.on('drinkOptions', (drinkOptionsArrayFromSocket: string[]) => {
-      console.log('Drink options', drinkOptionsArrayFromSocket);
       setRoundOptions(drinkOptionsArrayFromSocket);
     });
   }, [setRoundOptions]);
 };
 
-export const getVoteData = (): IReceiveData => {
-  sockets.on('drinkChoiceData', (midRoundDataFromSocket) => {
-    console.log('Drink choice data', midRoundDataFromSocket);
-  });
+export const useGetVoteData = (setVoteData: (data: any) => void) => {
+  useEffect(() => {
+    const handleDrinkChoiceData = (midRoundDataFromSocket: IReceiveData) => {
+      console.log('Drink choice data', midRoundDataFromSocket);
+      setVoteData(midRoundDataFromSocket);
+    };
 
-  sockets.on('drinkChoice', (finalDataFromSocket) => {
-    console.log(finalDataFromSocket);
-  });
+    sockets.on('drinkChoiceData', handleDrinkChoiceData);
 
-  return data;
+    return () => {
+      sockets.off('drinkChoiceData', handleDrinkChoiceData);
+    };
+  }, [setVoteData]);
 };
