@@ -1,8 +1,7 @@
 import GetDrinkOptions from './GetDrinkOptions.js';
 
-function SetUpDrinkVotes() {
+function SetUpDrinkVotes(drinkOptions) {
   let drinkVotes = [];
-  let drinkOptions = GetDrinkOptions(5, 0);
   console.log(`Drink options: ${drinkOptions}`);
   drinkOptions.forEach((element) => {
     drinkVotes.push({
