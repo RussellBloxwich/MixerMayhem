@@ -17,16 +17,16 @@ const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
 let actions = {
-  "hasMixed": false,
-  "hasHeated": false
-}
+  hasMixed: false,
+  hasHeated: false,
+};
 
 function StartRoundSetup() {
   // Send viable drink options to frontend
-  const initialDrinkOptions = GetDrinkOptions(5, 0, false)
+  const initialDrinkOptions = GetDrinkOptions(5, 0, false);
   sockets.emit('drinkOptions', initialDrinkOptions);
   drinkVotes = SetUpDrinkVotes(initialDrinkOptions);
-  // setTimeout(EndRound, roundLengthInMs);
+  setTimeout(EndRound, roundLengthInMs);
   isRoundActive = true;
 }
 
