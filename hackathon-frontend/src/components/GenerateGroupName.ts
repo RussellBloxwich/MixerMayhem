@@ -5,6 +5,7 @@ const startingWords = "Mixer Mayhem’s ";
 const finalWord = " Microwave Machine";
 
 export const generateName = (length: number):string => {
+    length = length - 3;
     const nameList: string[] = [];
     const shuffled = wordList.slice(0);
     var l = wordList.length;
