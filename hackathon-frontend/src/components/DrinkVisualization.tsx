@@ -33,7 +33,7 @@ const DrinkVisualization = () => {
                   backgroundColor: drink.color,
                 }}
               ></div>
-              <div className="liqued-name">{drink.name}</div>
+              {/* <div className="liqued-name">{drink.name}</div> */}
             </div>
           );
         }

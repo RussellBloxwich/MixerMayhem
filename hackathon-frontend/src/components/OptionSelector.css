@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.6em;
+  margin-bottom:  2em;
 }
 
 .drink-option {
