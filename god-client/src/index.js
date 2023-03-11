@@ -10,6 +10,7 @@ import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 // import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 import PlayAudio from './Helpers/PlayAudio.js';
+import { drinkSizes } from './Helpers/VolumeAllowedDrinks.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
@@ -21,10 +22,11 @@ let actions = {
   hasMixed: false,
   hasHeated: false,
 };
+let currentVolume = 0;
 
 function StartRoundSetup() {
   // Send viable drink options to frontend
-  const initialDrinkOptions = GetDrinkOptions(5, 0, false);
+  const initialDrinkOptions = GetDrinkOptions(5, currentVolume, actions);
   sockets.emit('drinkOptions', initialDrinkOptions);
   drinkVotes = SetUpDrinkVotes(initialDrinkOptions);
   setTimeout(EndRound, roundLengthInMs);
@@ -55,14 +57,21 @@ sockets.on('drinkChoice', (socket) => {
   sockets.emit('drinkChoiceData', payload);
 });
 
-// PlayAudio("C:/Users/aden/Desktop/testAudio.pcm");
-
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
   console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
+  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
+
+  if (votingIsFinished) {
+    // TODO: Finish Code
+  }
+
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
-  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
+  if (voteResult == 'Skip' || voteResult == 'Finish') {
+
+  }
+  currentVolume += 
   drinkHistory.push(voteResult);
 
   // Update frontend client

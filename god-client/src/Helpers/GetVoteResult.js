@@ -1,7 +1,8 @@
 function GetVoteResult(drinkVotes) {
-  // TODO: Add skip logic (treated differently)
-
   // Scale random chance to number of drinks
+
+  var selectedOption;
+
   const totalChance = drinkVotes.reduce(
     (acc, curr) => acc + curr.drinkChance,
     0
@@ -12,13 +13,14 @@ function GetVoteResult(drinkVotes) {
   for (const drink of drinkVotes) {
     runningTotal += drink.drinkChance;
     if (runningTotal >= randomChance) {
-      return drink;
+      selectedOption = drink;
     }
   }
 
   // If no drink is found (e.g. due to no votes), pick at random
-  const randomIndex = Math.floor(Math.random() * drinkVotes.length);
-  return drinkVotes[randomIndex];
+  if (!selectedOption) {
+    const randomIndex = Math.floor(Math.random() * drinkVotes.length);
+    selectedOption = drinkVotes[randomIndex];
+  }
 }
-
 export default GetVoteResult;
