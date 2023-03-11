@@ -22,7 +22,7 @@ const drinkList: DrinkData[] = [
 ]
 
 // Set number of decimal places for the percentages
-var percentageRounding = 0;
+const PERCENTAGEROUNDING = 0;
 
 
 export const getDrinkArray = (drinkList: Array<string>):Array<DrinkPercentage> => {
@@ -54,7 +54,7 @@ const readDrinkStateList = (drinkList: Array<string>) => {
     for (const drink in drinkVolumeList) {
         const drinkPercentageData: DrinkPercentage = {
             name: drink,
-            percentage: parseInt((100 * drinkVolumeList[drink] / totalVolume).toFixed(percentageRounding)),
+            percentage: parseInt((100 * drinkVolumeList[drink] / totalVolume).toFixed(PERCENTAGEROUNDING)),
             totalVolume: drinkVolumeList[drink],
             colour: findDrinkColour(drink)
         };  
