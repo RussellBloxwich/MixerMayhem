@@ -6,7 +6,7 @@ function updateDrinkVotes(currentDrinkVotes, drinkChoice, isBoosted) {
 
   // [ {drinkName: string, drinkVoteCount: int, drinkChance: decimal} ]
   currentDrinkVotes.forEach((drink) => {
-    drink.drinkVoteCount += votesToAdd;
+    if (drink == drinkChoice) drink.drinkVoteCount += votesToAdd;
     drink.drinkChance = drink.drinkVoteCount / totalVoteCount;
   });
 }

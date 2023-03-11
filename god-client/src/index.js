@@ -7,6 +7,7 @@ import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
+import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 let roundNumber = 1;
 let drinkChance = new Object({
   drinkName: '',
@@ -16,52 +17,42 @@ let drinkChance = new Object({
 let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
+const roundLengthInMs = 1500;
 
 sockets.emit('drinkOptions', GetDrinkOptions(5));
 
-// Handle user updating their choice (via selecting or changing option)
+setTimeout(EndRound, roundLengthInMs);
+
+// Handle user selecting or updating their vote, and update front end client
 sockets.on('drinkChoice', (socket) => {
-  console.log(`Choice updated: ${socket.id}. User name: ${socket.userName}.`);
-
-  let isBoosted = socket.isBoosted ?? false;
   drinkVotes = UpdateDrinkVotes(drinkVotes, socket.drinkChoice, isBoosted);
-  votingIsFinished = IsVotingComplete();
+  let payload = {
+    roundNumber,
+    drinkVotes,
+  };
+  sockets.emit('drinkChoiceData', payload);
+});
 
-  // Update the front end (via web socket) whenever new data comes in
-  var protocol = {
+// Handle user submitting their FINAL choice (due to round ending)
+function EndRound() {
+  sockets.forEach((socket) => {
+    drinkVotes = UpdateDrinkVotes(drinkVotes, socket.drinkChoice, isBoosted);
+  });
+  let voteResult = GetVoteResult();
+  votingIsFinished = IsVotingComplete();
+  round++;
+
+  // Update frontend client
+  let payload = {
     roundNumber,
     drinkVotes,
     votingIsFinished,
-    drinkHistory: [],
+    drinkHistory: drinkHistory.push(voteResult),
+    lastChosen: voteResult,
   };
-  sockets.emit('drinkChoiceData', protocol);
-});
+  sockets.emit('roundEndChoiceData', payload);
 
-// Handle user submitting their FINAL choice (via round ending)
-sockets.on('roundEndChoice', (socket) => {
-  console.log(
-    `Client choice updated: ${socket.id}. User name: ${socket.userName}.`
-  );
+  // Send drink choice to hardware (TODO)
 
-  let isBoosted = socket.isBoosted ?? false;
-  UpdateDrinkVotes(socket.drinkChoice, isBoosted);
-  UpdateDrinkVotes(drinkVotes);
-
-  // Update the front end (via web socket) whenever new data comes in
-  var protocol = {
-    roundNumber,
-    drinkVotes,
-    votingIsFinished: IsVotingComplete(),
-    drinkHistory,
-  };
-  sockets.emit('roundEndChoiceData', protocol);
-
-  round++;
-  // Send data to hardware
-
-  // Handle voting finish
-  votingIsFinished = IsVotingComplete();
-  if (votingIsFinished) {
-    // ?
-  }
-});
+  if (votingIsFinished) HandleDrinkEnd();
+}
