@@ -11,7 +11,7 @@ const OptionSelector = ({ options, setSelected }: IOptions) => {
     <div className="option-selector">
       {options.map((option, i) => {
         return (
-          <button
+          <button key={option.drinkName}
             onClick={() => {
               setSelected(option.drinkName);
             }}

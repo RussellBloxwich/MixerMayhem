@@ -3,17 +3,14 @@ import "./App.css";
 import OptionSelector from "./components/OptionSelector";
 import { getData } from "./components/InputOutput";
 import { IReceiveData, ISendData } from "./components/types";
+import DrinkVisualization from "./components/DrinkVisualization";
 
 function App() {
   const [selected, setSelected] = useState<string>();
-  const [currentIn, setCurrentIn] = useState<IReceiveData>();
+  const [currentIn, setCurrentIn] = useState<IReceiveData>(getData());
   const [currentOut, setCurrentOut] = useState<ISendData>();
 
   console.log(selected);
-
-  useEffect(
-    getData({ current: currentIn, setCurrent: setCurrentIn })
-  );
 
   return (
     <div className="main-screen">
@@ -21,10 +18,10 @@ function App() {
         <div className="project-name">
           Round Number: {currentIn?.roundNumber}
         </div>
-        <OptionSelector
-          options={currentIn?.drinks || []}
-          setSelected={setSelected}
-        />
+        <OptionSelector options={currentIn?.drinks} setSelected={setSelected} />
+      </div>
+      <div className="drink-visualization-wrapper">
+        <DrinkVisualization />
       </div>
       <footer>
         <button

@@ -92,6 +92,7 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .App {
@@ -107,6 +108,13 @@ video {
   align-items: center;
   justify-content: center;
   margin: 2em;
+}
+
+.drink-visualization-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid pink;
 }
 
 footer {
