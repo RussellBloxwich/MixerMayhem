@@ -7,6 +7,12 @@ function UpdateDrinkChance(
 ) {
   const boostedMultiplier = 2;
 
+  let totalVoteCount = currentDrinkVotes.reduce(function (acc, obj) {
+    let count = acc + obj.drinkVoteCount;
+    return count;
+  }, 0);
+  totalVoteCount++; // For the current vote
+
   // See if the user has already voted this round
   // If so, remove their old vote before continuing
   if (round == 1) {
@@ -15,33 +21,20 @@ function UpdateDrinkChance(
   whoHasVoted[`Round ${round}`] = [];
   if (Object.keys(whoHasVoted[`Round ${round}`]).includes(userId)) {
     let choiceName = whoHasVoted[`Round ${round}`].userId;
-    UpdateVoteCountAndProportion(choiceName, decrement, 1);
+    totalVoteCount--;
+    UpdateVoteCount(choiceName, decrement, 1);
   }
 
-  var totalVoteCount = currentDrinkVotes.reduce(function (acc, obj) {
-    return acc + obj.drinkVoteCount;
-  }, 0);
-
-  // TODO (nice-to-have): Split into two functions
-  function UpdateVoteCountAndProportion(
-    choiceName,
-    incrementOrDecrement,
-    votes
-  ) {
+  function UpdateVoteCount(choiceName, incrementOrDecrement, votes) {
     currentDrinkVotes = currentDrinkVotes.map((choice) => {
       if (choice.drinkName == choiceName) {
-        // Recalculate votes and percentage likelihood
         let newVoteCount =
           incrementOrDecrement == 'increment'
             ? choice.drinkVoteCount + votes
             : choice.drinkVoteCount - votes;
-        totalVoteCount++; // Current vote
-        let newPercentageLikelihood = newVoteCount / totalVoteCount;
-
         return {
           ...choice,
           drinkVoteCount: newVoteCount,
-          drinkChance: newPercentageLikelihood,
         };
       } else {
         return choice;
@@ -49,8 +42,7 @@ function UpdateDrinkChance(
     });
   }
 
-  UpdateProportionForEveryone();
-  function UpdateProportionForEveryone() {
+  function UpdateAllProportions() {
     currentDrinkVotes = currentDrinkVotes.map((choice) => ({
       ...choice,
       drinkChance: choice.drinkVoteCount / totalVoteCount,
@@ -58,7 +50,8 @@ function UpdateDrinkChance(
   }
 
   let votesToAdd = isBoosted ? boostedMultiplier : 1;
-  UpdateVoteCountAndProportion(drinkChoice, 'increment', votesToAdd);
+  UpdateVoteCount(drinkChoice, 'increment', votesToAdd);
+  UpdateAllProportions();
   whoHasVoted[`Round ${round}`][userId] = drinkChoice;
 
   return currentDrinkVotes;
