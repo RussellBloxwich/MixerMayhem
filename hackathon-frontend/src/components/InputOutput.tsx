@@ -21,5 +21,31 @@ export const getData = (): IReceiveData => {
     addedDrinks: ["tobasco", "mayonnaise", "vodka", "apple juice"],
   };
 
+  // const socket = new WebSocket("ws://3.25.151.51:3000");
+  // var data;
+
+  // socket.onopen = () => {
+  //   console.log("WebSocket connection established.");
+  // };
+
+  // socket.onmessage = (event) => {
+  //   console.log("Received WebSocket message:", event.data);
+  //   console.log("DATA", JSON.parse(event.data));
+  //   var data = JSON.parse(event.data);
+  //   // setCurrentIn(JSON.parse(event.data));
+  //   console.log("DATA", data);
+  // };
+  // console.log("DATA", data);
+
+  // socket.onclose = () => {
+  //   console.log("WebSocket connection closed.");
+  // };
+
+  // //  return () => {
+  // //     socket.close();
+  // // };
+
+  // console.log("Got data");
+
   return test;
 };
