@@ -18,39 +18,43 @@ function UpdateDrinkChance(
     UpdateVoteCountAndProportion(choiceName, decrement, 1);
   }
 
+  var totalVoteCount = currentDrinkVotes.reduce(function (acc, obj) {
+    return acc + obj.drinkVoteCount;
+  }, 0);
+
+  // TODO (nice-to-have): Split into two functions
   function UpdateVoteCountAndProportion(
     choiceName,
     incrementOrDecrement,
     votes
   ) {
-    var totalVoteCount = currentDrinkVotes.reduce(function (acc, obj) {
-      return acc + obj.drinkVoteCount;
-    }, 0);
-
-    currentDrinkVotes.map((choice) => {
+    currentDrinkVotes = currentDrinkVotes.map((choice) => {
       if (choice.drinkName == choiceName) {
-        // Recalculate votes
-        let newVoteCount;
-        let newPercentageLikelihood;
-        incrementOrDecrement == 'increment'
-          ? (newVoteCount = choice.drinkVoteCount += votes)
-          : (newVoteCount = choice.drinkVoteCount -= votes);
-
-        // Recalculate percentage likelihood to be picked
-        newPercentageLikelihood = choice.drinkVoteCount / totalVoteCount;
+        // Recalculate votes and percentage likelihood
+        let newVoteCount =
+          incrementOrDecrement == 'increment'
+            ? choice.drinkVoteCount + votes
+            : choice.drinkVoteCount - votes;
+        totalVoteCount++; // Current vote
+        let newPercentageLikelihood = newVoteCount / totalVoteCount;
 
         return {
-          ...currentDrinkVotes,
-          choice: {
-            drinkName: choice.drinkName,
-            drinkVoteCount: newVoteCount,
-            drinkChance: newPercentageLikelihood,
-          },
+          ...choice,
+          drinkVoteCount: newVoteCount,
+          drinkChance: newPercentageLikelihood,
         };
       } else {
         return choice;
       }
     });
+  }
+
+  UpdateProportionForEveryone();
+  function UpdateProportionForEveryone() {
+    currentDrinkVotes = currentDrinkVotes.map((choice) => ({
+      ...choice,
+      drinkChance: choice.drinkVoteCount / totalVoteCount,
+    }));
   }
 
   let votesToAdd = isBoosted ? boostedMultiplier : 1;
