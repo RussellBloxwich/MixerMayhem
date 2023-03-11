@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
 import { useGetDrinkOptions, useGetVoteData } from "./components/InputOutput";
@@ -38,25 +38,27 @@ function App() {
     });
     sockets.emit('drinkChoice', currentOut);
   };
-
+  
   var finishDrinkPercentage = 0;
-  console.log("YOWOWOOWOWOWOW", voteData?.drinks)
-  if (voteData?.drinks != undefined) {
+  var nextRoundPercentage = 0;
+
+  useEffect(() => {
+    if (voteData?.drinks != undefined) {
+      voteData?.drinks.forEach((drink: any) => {
+        if (drink.drinkName === "finish drink") {
+          finishDrinkPercentage = drink.drinkChance;
+        }
+      });
+    }
+  
+    if (voteData?.drinks != undefined) {
     voteData?.drinks.forEach((drink: any) => {
-      if (drink.drinkName === "finish drink") {
-        finishDrinkPercentage = drink.drinkChance;
+      if (drink.drinkName === "skip round") {
+        nextRoundPercentage = drink.drinkChance;
       }
     });
   }
-
-  var nextRoundPercentage = 0;
-  if (voteData?.drinks != undefined) {
-  voteData?.drinks.forEach((drink: any) => {
-    if (drink.drinkName === "skip round") {
-      nextRoundPercentage = drink.drinkChance;
-    }
-  });
-}
+}, [voteData]);
 
   return (
     <>
