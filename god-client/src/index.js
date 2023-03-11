@@ -12,8 +12,8 @@ import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 20_000;
-const delayLengthInMs = 30_000;
+const roundLengthInMs = 1000;
+const delayLengthInMs = 1000;
 let drinkVotes;
 let isRoundActive = false;
 
@@ -51,8 +51,7 @@ sockets.on('drinkChoice', (socket) => {
 function EndRound() {
   console.log(`EndRound (round ${roundNumber}) has been triggered.`);
   let voteResult = GetVoteResult();
-  votingIsFinished = IsVotingComplete();
-  roundNumber++;
+  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
 
   // Update frontend client
   let payload = {
@@ -62,6 +61,7 @@ function EndRound() {
     drinkHistory: drinkHistory.push(voteResult),
     lastChosen: voteResult ?? null,
   };
+  roundNumber++;
 
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
@@ -69,9 +69,10 @@ function EndRound() {
   SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
-  if (votingIsFinished) HandleDrinkEnd();
-
-  isRoundActive = false;
-
-  setTimeout(StartRoundSetup, delayLengthInMs);
+  if (votingIsFinished) {
+    HandleDrinkEnd();
+  } else {
+    isRoundActive = false;
+    setTimeout(StartRoundSetup, delayLengthInMs);
+  }
 }
