@@ -1,14 +1,18 @@
-function updateDrinkVotes(currentDrinkVotes, drinkChoice, isBoosted = false) {
+function UpdateDrinkVotes(currentDrinkVotes, drinkChoice, isBoosted = false) {
   let boostedMultiplier = 2;
   let votesToAdd = isBoosted ? 1 : 1 * boostedMultiplier;
 
-  let totalVoteCount = currentDrinkVotes.values().length + votesToAdd;
+  let totalVoteCount = Object.values(currentDrinkVotes).length + votesToAdd;
 
   // [ {drinkName: string, drinkVoteCount: int, drinkChance: decimal} ]
-  currentDrinkVotes.forEach((drink) => {
-    if (drink == drinkChoice) drink.drinkVoteCount += votesToAdd;
+  Object.values(currentDrinkVotes).forEach((drink) => {
+    if (drink.drinkName == drinkChoice) {
+      drink.drinkVoteCount += votesToAdd;
+    }
     drink.drinkChance = drink.drinkVoteCount / totalVoteCount;
   });
+
+  return currentDrinkVotes;
 }
 
-export default updateDrinkVotes;
+export default UpdateDrinkVotes;

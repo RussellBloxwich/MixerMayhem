@@ -1,4 +1,4 @@
-import { AllowedDrinks } from './VolumeCheck';
+import AllowedDrinks from './VolumeCheck.js';
 
 function IsVotingComplete(drinkVotes, currentVolume, CurrentRound) {
   // Configurables
