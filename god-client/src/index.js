@@ -8,37 +8,49 @@ import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import UpdateDrinkVotes from './Helpers/UpdateDrinkVotes.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
+import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 let roundNumber = 1;
 let drinkChance = new Object({
   drinkName: '',
   drinkVoteCount: 0,
   drinkChance: null,
 });
-let drinkVotes = []; // Array of drinkChance
 let votingIsFinished = false;
 let drinkHistory = [];
 let currentVolume = 0;
-const roundLengthInMs = 1500;
+let isBoosted = false;
+const roundLengthInMs = 20000;
+import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 
-sockets.emit('drinkOptions', GetDrinkOptions(5));
+sockets.emit('drinkOptions', GetDrinkOptions(5, 0));
 
+let drinkVotes = SetUpDrinkVotes();
 setTimeout(EndRound, roundLengthInMs);
 
 // Handle user selecting or updating their vote, and update front end client
 sockets.on('drinkChoice', (socket) => {
-  drinkVotes = UpdateDrinkVotes(drinkVotes, socket.drinkChoice, isBoosted);
+  drinkVotes = UpdateDrinkVotes(
+    drinkVotes,
+    socket.drinkChoice,
+    socket.isBoosted
+  );
   let payload = {
     roundNumber,
     drinkVotes,
   };
+  console.log(
+    `Mid-round (round ${roundNumber}) payload to send to front end: `,
+    payload
+  );
   sockets.emit('drinkChoiceData', payload);
 });
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
+  console.log(`EndRound (round ${roundNumber}) has been triggered.`);
   let voteResult = GetVoteResult();
   votingIsFinished = IsVotingComplete();
-  round++;
+  roundNumber++;
 
   // Update frontend client
   let payload = {
@@ -46,11 +58,15 @@ function EndRound() {
     drinkVotes,
     votingIsFinished,
     drinkHistory: drinkHistory.push(voteResult),
-    lastChosen: voteResult,
+    lastChosen: voteResult ?? null,
   };
+
+  console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  // Send drink choice to hardware (TODO)
+  SendProtocolToHardware(voteResult);
+
+  drinkVotes = SetUpDrinkVotes(); // Clear old votes
 
   if (votingIsFinished) HandleDrinkEnd();
 }
