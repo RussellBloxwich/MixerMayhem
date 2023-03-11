@@ -1,5 +1,5 @@
 import { stringify } from "querystring";
-import react from "react";
+import React from "react";
 import "./DrinkVisualization.css";
 
 const getValues = () => {

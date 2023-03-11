@@ -87,6 +87,10 @@ video {
   vertical-align: baseline;
 }
 
+button {
+  cursor: pointer;
+}
+
 .main-screen {
   height: 100vh;
   display: flex;
