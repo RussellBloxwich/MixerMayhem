@@ -1,8 +1,8 @@
-export function AllowedDrinks(currentVolume) {
+function VolumeAllowedDrinks(currentVolume) {
   const remainingVolume = 750 - currentVolume;
 
   var allowedSizes = [];
-  var alowedDrinks = [];
+  var allowedDrinks = [];
 
   for (const sizes in drinkSizes) {
     if (sizes.volume < remainingVolume) {
@@ -12,7 +12,7 @@ export function AllowedDrinks(currentVolume) {
 
   for (const drinks in drinkOptions) {
     if (allowedSizes.includes(drinks.size)) {
-      alowedDrinks.push(drinks.name);
+      allowedDrinks.push(drinks.name);
     }
   }
 }
@@ -24,11 +24,11 @@ export const drinkSizes = [
 ];
 
 export const drinkOptions = [
-  { name: 'coke', size: 'L' },
+  { name: 'Coke', size: 'L' },
   { name: 'Water', size: 'L' },
   { name: 'Oil', size: 'M' },
-  { name: 'Vanilla  essence', size: 'S' },
+  { name: 'Vanilla essence', size: 'S' },
   { name: 'Red bull', size: 'L' },
 ];
 
-export default AllowedDrinks;
+export default VolumeAllowedDrinks;
