@@ -7,7 +7,7 @@ import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
-// import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
+import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 import PlayAudio from './Helpers/PlayAudio.js';
 import { drinkSizes, drinkOptions } from './Helpers/VolumeAllowedDrinks.js';
@@ -62,7 +62,12 @@ sockets.on('drinkChoice', (socket) => {
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
   console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
-  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber, currentVolume, numberOfRounds);
+  votingIsFinished = IsVotingComplete(
+    drinkVotes,
+    roundNumber,
+    currentVolume,
+    numberOfRounds
+  );
 
   if (votingIsFinished) {
     // TODO: Finish Code
@@ -77,13 +82,16 @@ function EndRound() {
     numberOfRounds++;
     actions['hasMixed'] = true;
     // TODO: Add Mixing Protocol
-
   } else if (voteResult.drinkName == 'Heat') {
     numberOfRounds++;
     actions['hasHeated'] = true;
     // TODO: Add Mixing Protocol
   } else {
-    const drinkVolume =  drinkSizes.find(object => object.size === (drinkOptions.find(drink => drink.name === voteResult.drinkName).size)).volume;
+    const drinkVolume = drinkSizes.find(
+      (object) =>
+        object.size ===
+        drinkOptions.find((drink) => drink.name === voteResult.drinkName).size
+    ).volume;
     currentVolume += drinkVolume;
   }
 
@@ -102,7 +110,7 @@ function EndRound() {
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  // SendProtocolToHardware(voteResult);
+  SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
   if (votingIsFinished) {
