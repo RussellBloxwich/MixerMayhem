@@ -1,9 +1,6 @@
-import VolumeAllowedDrinks from './VolumeAllowedDrinks.js';
+import VolumeAllowedDrinks, { drinkSizes } from './VolumeAllowedDrinks.js';
 
-function IsVotingComplete(drinkVotes, currentRound, currentVolume) {
-  // Configurables
-  const numberOfRounds = 5;
-
+function IsVotingComplete(drinkVotes, currentRound, currentVolume, numberOfRounds) {
   // Check round
   if (numberOfRounds == currentRound) {
     console.log('Ending drink due to running out of rounds.');
@@ -11,11 +8,10 @@ function IsVotingComplete(drinkVotes, currentRound, currentVolume) {
   }
 
   // Check volume
-  // TODO: Fix code. This doesn't work
-  // if (!VolumeAllowedDrinks(currentVolume)) {
-  //   console.log('Ending drink due to too much volume.');
-  //   return true;
-  // }
+  if (VolumeAllowedDrinks(currentVolume + drinkSizes.find(object => object.size === 'S').volume).length == 0) {
+    console.log('Ending drink due to too much volume.');
+    return true;
+  }
 
   // Check votes to end
   var endRoundTally;

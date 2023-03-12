@@ -10,23 +10,27 @@ import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 // import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 import PlayAudio from './Helpers/PlayAudio.js';
+import { drinkSizes, drinkOptions } from './Helpers/VolumeAllowedDrinks.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 20_000;
-const delayLengthInMs = 30_000;
+const roundLengthInMs = 25_00;
+const delayLengthInMs = 30_00;
 let drinkVotes;
 let isRoundActive = false;
 let actions = {
   hasMixed: false,
   hasHeated: false,
 };
+let currentVolume = 0;
+let numberOfRounds = 5;
 
 function StartRoundSetup() {
   // Send viable drink options to frontend
-  const initialDrinkOptions = GetDrinkOptions(5, 0, false);
-  sockets.emit('drinkOptions', initialDrinkOptions);
-  drinkVotes = SetUpDrinkVotes(initialDrinkOptions);
+  console.log(`Current Volume: ${currentVolume}`);
+  const drinkOptions = GetDrinkOptions(5, currentVolume, actions);
+  sockets.emit('drinkOptions', drinkOptions);
+  drinkVotes = SetUpDrinkVotes(drinkOptions);
   setTimeout(EndRound, roundLengthInMs);
   isRoundActive = true;
 }
@@ -55,14 +59,34 @@ sockets.on('drinkChoice', (socket) => {
   sockets.emit('drinkChoiceData', payload);
 });
 
-// PlayAudio("C:/Users/aden/Desktop/testAudio.pcm");
-
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
   console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
+  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber, currentVolume, numberOfRounds);
+
+  if (votingIsFinished) {
+    // TODO: Finish Code
+  }
+
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
-  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber);
+
+  if (voteResult.drinkName == 'Skip' || voteResult.drinkName == 'Finish') {
+    // Take care of yourself
+  } else if (voteResult.drinkName == 'Mix') {
+    numberOfRounds++;
+    actions['hasMixed'] = true;
+    // TODO: Add Mixing Protocol
+
+  } else if (voteResult.drinkName == 'Heat') {
+    numberOfRounds++;
+    actions['hasHeated'] = true;
+    // TODO: Add Mixing Protocol
+  } else {
+    const drinkVolume =  drinkSizes.find(object => object.size === (drinkOptions.find(drink => drink.name === voteResult.drinkName).size)).volume;
+    currentVolume += drinkVolume;
+  }
+
   drinkHistory.push(voteResult);
 
   // Update frontend client
