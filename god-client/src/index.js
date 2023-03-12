@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-const sockets = io('http://3.25.151.51:3000');
+const sockets = io('https://3.25.151.51:3000');
 
 // Imports and initialisation
 import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
@@ -69,10 +69,6 @@ function EndRound() {
     numberOfRounds
   );
 
-  if (votingIsFinished) {
-    // TODO: Finish Code
-  }
-
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
 
@@ -85,7 +81,7 @@ function EndRound() {
   } else if (voteResult.drinkName == 'Heat') {
     numberOfRounds++;
     actions['hasHeated'] = true;
-    // TODO: Add Mixing Protocol
+    // TODO: Add heating Protocol
   } else {
     const drinkVolume = drinkSizes.find(
       (object) =>
