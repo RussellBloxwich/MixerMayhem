@@ -1,11 +1,13 @@
 import React from "react";
 import "./OptionSelector.css";
+import { IReceiveData } from "./types";
 
 interface IOptions {
   options: string[];
   setSelected: React.Dispatch<React.SetStateAction<string>>;
   selected: string;
   handleChoice: () => void;
+  voteData: any | undefined;
 }
 
 const OptionSelector = ({
@@ -13,7 +15,9 @@ const OptionSelector = ({
   setSelected,
   selected,
   handleChoice,
+  voteData
 }: IOptions) => {
+  console.log('voteData', voteData)
   return (
     options ?
     <div className="option-selector">
@@ -21,7 +25,8 @@ const OptionSelector = ({
         if (
           !(option === "finish drink") &&
           !(option === "skip round")
-        ) {
+        ) 
+        {
           return (
             <button
               className={`${
@@ -34,7 +39,12 @@ const OptionSelector = ({
               }}
             >
               <div>{option}</div>{" "}
-              <div>Chance: {option}%</div>
+              <div>Chance: {
+                isNaN(voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance)
+                  ? "0.0"
+                  : (voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance * 100).toFixed(1)
+                }%
+              </div>
             </button>
           );
         }

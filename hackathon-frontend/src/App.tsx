@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import OptionSelector from "./components/OptionSelector";
-import { useGetDrinkOptions, getVoteData } from "./components/InputOutput";
+import { useGetDrinkOptions, useGetVoteData } from "./components/InputOutput";
 import { IReceiveData, ISendData } from "./components/types";
 import DrinkVisualization from "./components/DrinkVisualization";
 import Login from "./components/Login";
@@ -9,13 +9,17 @@ import { generateUUID } from "./components/generateUUID";
 import LoadingBar from "./components/LoadingBar";
 import LoadingScreen from "./components/LoadingScreen";
 
+import { io } from 'socket.io-client';
+const sockets = io('http://3.25.151.51:3000');
+
 function App() {
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
-  const [currentIn, setCurrentIn] = useState<IReceiveData>(getVoteData());
+  const [voteData, setVoteData] = useState<any>();
+  useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
     drinkChoice: "",
@@ -26,29 +30,35 @@ function App() {
   });
   const [increasePower, setIncreasePower] = useState(false);
 
-  console.log(selected);
-
   const handleChoice = () => {
     setCurrentOut({
       ...currentOut,
       isBoosted: increasePower,
       drinkChoice: selected,
     });
+    sockets.emit('drinkChoice', currentOut);
   };
-
+  
   var finishDrinkPercentage = 0;
-  currentIn.drinks.forEach((drink) => {
-    if (drink.drinkName === "finish drink") {
-      finishDrinkPercentage = drink.drinkChance;
-    }
-  });
-
   var nextRoundPercentage = 0;
-  currentIn.drinks.forEach((drink) => {
-    if (drink.drinkName === "skip round") {
-      nextRoundPercentage = drink.drinkChance;
+
+  useEffect(() => {
+    if (voteData?.drinks != undefined) {
+      voteData?.drinks.forEach((drink: any) => {
+        if (drink.drinkName === "finish drink") {
+          finishDrinkPercentage = drink.drinkChance;
+        }
+      });
     }
-  });
+  
+    if (voteData?.drinks != undefined) {
+    voteData?.drinks.forEach((drink: any) => {
+      if (drink.drinkName === "skip round") {
+        nextRoundPercentage = drink.drinkChance;
+      }
+    });
+  }
+}, [voteData]);
 
   return (
     <>
@@ -62,7 +72,7 @@ function App() {
               <LoadingBar currentTime={40} totalTime={45} />
               <header>
                 <div>User Name: {userName}</div>
-                <div>Round Number: {currentIn.roundNumber}</div>
+                <div>Round Number: {voteData?.roundNumber}</div>
               </header>
               <button
                 className="increase-vote"
@@ -84,6 +94,7 @@ function App() {
               setSelected={setSelected}
               selected={selected || ""}
               handleChoice={handleChoice}
+              voteData={voteData}
             />
           </div>
           <div className="drink-visualization-wrapper">
