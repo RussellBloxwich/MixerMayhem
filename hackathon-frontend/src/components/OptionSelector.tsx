@@ -25,7 +25,8 @@ const OptionSelector = ({
         if (
           !(option === "finish drink") &&
           !(option === "skip round")
-        ) {
+        ) 
+        {
           return (
             <button
               className={`${
@@ -38,7 +39,12 @@ const OptionSelector = ({
               }}
             >
               <div>{option}</div>{" "}
-              <div>Chance: {voteData?.drinkChance ?? "0"}%</div>
+              <div>Chance: {
+                isNaN(voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance)
+                  ? "0.0"
+                  : (voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance * 100).toFixed(1)
+                }%
+              </div>
             </button>
           );
         }
