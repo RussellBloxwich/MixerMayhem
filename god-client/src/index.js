@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-const sockets = io('http://3.25.151.51:3000');
+const sockets = io('https://3.25.151.51:3000');
 
 // Imports and initialisation
 import GetDrinkOptions from './Helpers/GetDrinkOptions.js';
@@ -62,7 +62,13 @@ sockets.on('drinkChoice', (socket) => {
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
   console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
-  votingIsFinished = IsVotingComplete(drinkVotes, roundNumber, currentVolume, numberOfRounds);
+  votingIsFinished = IsVotingComplete(
+    drinkVotes,
+    roundNumber,
+    currentVolume,
+    numberOfRounds
+  );
+
 
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
@@ -73,13 +79,16 @@ function EndRound() {
     numberOfRounds++;
     actions['hasMixed'] = true;
     SendProtocolToHardware('Mix');
-
   } else if (voteResult.drinkName == 'Heat') {
     numberOfRounds++;
     actions['hasHeated'] = true;
     SendProtocolToHardware('Heat');
   } else {
-    const drinkVolume =  drinkSizes.find(object => object.size === (drinkOptions.find(drink => drink.name === voteResult.drinkName).size)).volume;
+    const drinkVolume = drinkSizes.find(
+      (object) =>
+        object.size ===
+        drinkOptions.find((drink) => drink.name === voteResult.drinkName).size
+    ).volume;
     currentVolume += drinkVolume;
     SendProtocolToHardware(voteResult.drinkName);
   }
