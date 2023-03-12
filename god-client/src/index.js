@@ -14,8 +14,8 @@ import { drinkSizes, drinkOptions } from './Helpers/VolumeAllowedDrinks.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 25_00;
-const delayLengthInMs = 30_00;
+const roundLengthInMs = 25_000;
+const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
 let actions = {
