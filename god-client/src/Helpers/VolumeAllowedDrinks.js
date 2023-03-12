@@ -27,7 +27,6 @@ export const drinkOptions = [
   { name: 'Coke', size: 'L' },
   { name: 'Milk', size: 'L' },
   { name: 'Juice', size: 'L' },
-  { name: 'Vanilla', size: 'S' },
   { name: 'Lemon', size: 'S' },
   { name: 'Peppermint', size: 'S' },
   { name: 'Soy', size: 'S' },

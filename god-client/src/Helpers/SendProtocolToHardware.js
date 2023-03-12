@@ -4,7 +4,7 @@ serialPort.on('error', function (e) {
   console.error('Failed to send protocol to robot.', e);
 });
 
-function SendProtocolToHardware(voteResult = '') {
+export function SendProtocolToHardware(voteResult = '') {
   try {
     serialPort.write(voteResult);
   } catch (e) {

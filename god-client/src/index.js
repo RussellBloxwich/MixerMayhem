@@ -7,7 +7,7 @@ import GetVoteResult from './Helpers/GetVoteResult.js';
 import IsVotingComplete from './Helpers/IsVotingComplete.js';
 import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
-// import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
+import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 import PlayAudio from './Helpers/PlayAudio.js';
 import { drinkSizes, drinkOptions } from './Helpers/VolumeAllowedDrinks.js';
@@ -28,7 +28,7 @@ let numberOfRounds = 5;
 function StartRoundSetup() {
   // Send viable drink options to frontend
   console.log(`Current Volume: ${currentVolume}`);
-  const drinkOptions = GetDrinkOptions(5, currentVolume, actions);
+  const drinkOptions = GetDrinkOptions(4, currentVolume, actions);
   sockets.emit('drinkOptions', drinkOptions);
   drinkVotes = SetUpDrinkVotes(drinkOptions);
   setTimeout(EndRound, roundLengthInMs);
@@ -64,10 +64,6 @@ function EndRound() {
   console.log(`\nEndRound (round ${roundNumber}) has been triggered.`);
   votingIsFinished = IsVotingComplete(drinkVotes, roundNumber, currentVolume, numberOfRounds);
 
-  if (votingIsFinished) {
-    // TODO: Finish Code
-  }
-
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
 
@@ -76,15 +72,16 @@ function EndRound() {
   } else if (voteResult.drinkName == 'Mix') {
     numberOfRounds++;
     actions['hasMixed'] = true;
-    // TODO: Add Mixing Protocol
+    SendProtocolToHardware('Mix');
 
   } else if (voteResult.drinkName == 'Heat') {
     numberOfRounds++;
     actions['hasHeated'] = true;
-    // TODO: Add Mixing Protocol
+    SendProtocolToHardware('Heat');
   } else {
     const drinkVolume =  drinkSizes.find(object => object.size === (drinkOptions.find(drink => drink.name === voteResult.drinkName).size)).volume;
     currentVolume += drinkVolume;
+    SendProtocolToHardware(voteResult.drinkName);
   }
 
   drinkHistory.push(voteResult);
@@ -102,7 +99,6 @@ function EndRound() {
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  // SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
   if (votingIsFinished) {
