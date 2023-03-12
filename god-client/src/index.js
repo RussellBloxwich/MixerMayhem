@@ -9,6 +9,7 @@ import UpdateDrinkChance from './Helpers/UpdateDrinkChance.js';
 import HandleDrinkEnd from './Helpers/HandleDrinkEnd.js';
 // import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
+import PlayAudio from './Helpers/PlayAudio.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
@@ -53,6 +54,8 @@ sockets.on('drinkChoice', (socket) => {
   );
   sockets.emit('drinkChoiceData', payload);
 });
+
+// PlayAudio("C:/Users/aden/Desktop/testAudio.pcm");
 
 // Handle user submitting their FINAL choice (due to round ending)
 function EndRound() {
