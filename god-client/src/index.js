@@ -15,8 +15,8 @@ import RandomAudioGet from './Helpers/RandomAudioGet.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 5_000;
-const delayLengthInMs = 5_000;
+const roundLengthInMs = 25_000;
+const delayLengthInMs = 30_000;
 let drinkVotes;
 let isRoundActive = false;
 let actions = {
