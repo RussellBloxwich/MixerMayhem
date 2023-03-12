@@ -7,51 +7,75 @@ interface IOptions {
   setSelected: React.Dispatch<React.SetStateAction<string>>;
   selected: string;
   handleChoice: () => void;
-  voteData: any | undefined;
+  voteData: IReceiveData | undefined;
 }
+
+const testData = {
+  roundNumber: 4,
+  drinks: [
+    { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+    { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+    { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+    { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+  ],
+  isFinished: false,
+  addedDrinks: [],
+};
 
 const OptionSelector = ({
   options,
   setSelected,
   selected,
   handleChoice,
-  voteData
+  voteData = {
+    roundNumber: 4,
+    drinks: [
+      { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+      { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+      { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+      { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+    ],
+    isFinished: false,
+    addedDrinks: [],
+  },
 }: IOptions) => {
-  console.log('voteData', voteData)
-  return (
-    options ?
-    <div className="option-selector">
-      {options.map((option, i) => {
-        if (
-          !(option === "finish drink") &&
-          !(option === "skip round")
-        ) 
-        {
-          return (
-            <button
-              className={`${
-                selected === option ? "selected " : ""
-              } drink-option`}
-              key={option + i.toString}
-              onClick={() => {
-                setSelected(option);
-                handleChoice();
-              }}
-            >
-              <div>{option}</div>{" "}
-              <div>Chance: {
-                isNaN(voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance)
-                  ? "0.0"
-                  : (voteData?.drinkVotes?.find((element: any) => element?.drinkName === option)?.drinkChance * 100).toFixed(1)
-                }%
-              </div>
-            </button>
-          );
-        }
-      })}
-    </div>
-    : <div>Options will show when a new round starts.</div>
-  );
+  var display;
+
+  const handleClick = (name: string) => {
+    setSelected(name);
+    console.log(name);
+    handleChoice()
+  };
+
+  if (voteData !== undefined) {
+    display = voteData.drinks.map((e) => {
+      return (
+        <button
+          key={e.drinkName}
+          onClick={() => {
+            handleClick(e.drinkName);
+          }}
+        >
+          {e.drinkName} : {e.drinkChance}
+        </button>
+      );
+    });
+  } else {
+    display = options.map((e) => {
+      return (
+        <button
+          key={e}
+          onClick={() => {
+            handleClick(e);
+          }}
+        >
+          {e}
+        </button>
+      );
+    });
+  }
+
+  return <>{display}</>;
 };
 
 export default OptionSelector;

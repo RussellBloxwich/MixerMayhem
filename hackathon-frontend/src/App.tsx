@@ -18,13 +18,12 @@ function App() {
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
-  const [voteData, setVoteData] = useState<IReceiveData | undefined>();
-  //   {
-  //   roundNumber: 2,
-  //   drinks: [],
-  //   isFinished: false,
-  //   addedDrinks: ["Coke", "Vanilla", "Tobasco"],
-  // }
+  const [voteData, setVoteData] = useState<IReceiveData | undefined>({
+    roundNumber: 2,
+    drinks: [{ drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 }],
+    isFinished: false,
+    addedDrinks: ["Coke", "Vanilla", "Tobasco"],
+  });
   useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
@@ -51,6 +50,7 @@ function App() {
       drinkChoice: selected,
     });
     sockets.emit("drinkChoice", currentOut);
+    console.log(currentOut);
   };
 
   var finishDrinkPercentage = 0;
@@ -126,7 +126,12 @@ function App() {
                 //   isFinished: false,
                 //   addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
                 // }
-                voteData
+                voteData || {
+                  roundNumber: 0,
+                  drinks: [],
+                  isFinished: false,
+                  addedDrinks: [],
+                }
               }
             />
           </div>
@@ -158,18 +163,23 @@ function App() {
           </footer>
         </div>
       )}
-      {/* <button
+      <button
         onClick={() =>
           setVoteData({
             roundNumber: 2,
-            drinks: [],
+            drinks: [
+              { drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 },
+              { drinkName: "Milk", drinkVoteCount: 202, drinkChance: 20 },
+              { drinkName: "Vanilla", drinkVoteCount: 2, drinkChance: 20 },
+              { drinkName: "Juice", drinkVoteCount: 14, drinkChance: 20 },
+            ],
             isFinished: false,
             addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
           })
         }
       >
         Click here to update data
-      </button> */}
+      </button>
     </>
   );
 }

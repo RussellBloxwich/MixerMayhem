@@ -13,17 +13,17 @@ interface DrinkData {
 
 // Drink List
 const DRINKQUANTITIES: DrinkData[] = [
-  { name: "Coke", volume: 200, colour: "brown" },
-  { name: "Milk", volume: 200, colour: "white" },
-  { name: "Juice", volume: 200, colour: "orange" },
-  { name: "Tobasco", volume: 40, colour: "red" },
+  { name: "Coke", volume: 150, colour: "brown" },
+  { name: "Milk", volume: 150, colour: "white" },
+  { name: "Juice", volume: 150, colour: "orange" },
+  { name: "Tobasco", volume: 20, colour: "red" },
   { name: "Vanilla", volume: 20, colour: "NavahoWhite" },
   { name: "Lemon", volume: 20, colour: "yellow" },
   { name: "Peppermint", volume: 20, colour: "#C1E4D8" },
   { name: "Soy", volume: 20, colour: "black" },
 ];
 
-const TOTALQUANTITY = 600;
+const TOTALQUANTITY = 1000;
 
 export const getDrinkQuantities = (drinks: string[]) => {
   const toReturn = drinks.map((e: string) => {
