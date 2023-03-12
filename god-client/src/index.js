@@ -11,11 +11,12 @@ import SendProtocolToHardware from './Helpers/SendProtocolToHardware.js';
 import SetUpDrinkVotes from './Helpers/SetUpDrinkVotes.js';
 import PlayAudio from './Helpers/PlayAudio.js';
 import { drinkSizes, drinkOptions } from './Helpers/VolumeAllowedDrinks.js';
+import RandomAudioGet from './Helpers/RandomAudioGet.js';
 let roundNumber = 1;
 let votingIsFinished = false;
 let drinkHistory = [];
-const roundLengthInMs = 25_000;
-const delayLengthInMs = 30_000;
+const roundLengthInMs = 5_000;
+const delayLengthInMs = 5_000;
 let drinkVotes;
 let isRoundActive = false;
 let actions = {
@@ -24,6 +25,8 @@ let actions = {
 };
 let currentVolume = 0;
 let numberOfRounds = 5;
+let audioScramble = false;
+let audioIndex = 0;
 
 function StartRoundSetup() {
   // Send viable drink options to frontend
@@ -35,6 +38,7 @@ function StartRoundSetup() {
   isRoundActive = true;
 }
 
+PlayAudio('./src/Audio/Welcome.pcm');
 StartRoundSetup();
 
 // Handle user selecting or updating their vote, and update front end client
@@ -111,8 +115,12 @@ function EndRound() {
 
   // Finish drink or move to next round
   if (votingIsFinished) {
+    PlayAudio('./src/Audio/Mmmmmmm.pcm');
     HandleDrinkEnd();
   } else {
+    PlayAudio(RandomAudioGet(audioScramble, audioIndex))
+    if (!audioScramble) {audioScramble = true};
+    if (audioIndex == 5) {audioIndex =0} else {audioIndex++}
     isRoundActive = false;
     setTimeout(StartRoundSetup, delayLengthInMs);
   }

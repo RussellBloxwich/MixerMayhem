@@ -6,7 +6,7 @@ import Speaker from 'speaker';
 
 function PlayAudio(filePath) {
   const speaker = new Speaker({
-    channels: 2,          
+    channels: 1,          
     bitDepth: 16,         
     sampleRate: 44100     
   });
