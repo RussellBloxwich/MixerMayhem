@@ -18,7 +18,12 @@ function App() {
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
-  const [voteData, setVoteData] = useState<IReceiveData>();
+  const [voteData, setVoteData] = useState<IReceiveData | undefined>({
+    roundNumber: 2,
+    drinks: [],
+    isFinished: false,
+    addedDrinks: ["Coke", "Vanilla"],
+  });
   useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
@@ -30,15 +35,13 @@ function App() {
   });
   const [increasePower, setIncreasePower] = useState(false);
 
-  if (voteData !== undefined) {
-    setVoteData({
-      ...voteData,
-      roundNumber: voteData.roundNumber || 0,
-      drinks: voteData.drinks || [],
-      isFinished: voteData.isFinished || false,
-      addedDrinks: voteData.addedDrinks || [],
-    });
-  }
+  // setVoteData({
+  //   roundNumber: 2,
+  //   drinks: [],
+  //   isFinished: false,
+  //   addedDrinks: ["Coke", "Vanilla"],
+  // });
+  console.log("voteData:", voteData);
 
   const handleChoice = () => {
     setCurrentOut({
@@ -77,16 +80,19 @@ function App() {
         <LoadingScreen username={userName} />
       )}
 
-      {userName !== "" && !loading && voteData !== undefined && (
+      {userName !== "" && !loading && (
         <div className="main-screen">
           <div className="App">
             <div className="project-name">
               <LoadingBar currentTime={40} totalTime={45} />
               <header>
                 <div>User Name: {userName}</div>
-                <div>Round Number: {voteData.roundNumber}</div>
+                {/* <div>Round Number: {voteData?.roundNumber || 4}</div> */}
               </header>
-              <button
+              {
+                //REMOVED THE BUTTON TO INCREASE POWER
+              }
+              {/* <button
                 className="increase-vote"
                 style={{
                   backgroundColor: increasePower
@@ -99,7 +105,7 @@ function App() {
                 }}
               >
                 Increase Vote Power: {increasePower ? " Active" : " Inactive"}
-              </button>
+              </button> */}
             </div>
             <OptionSelector
               options={roundOptions}
@@ -110,7 +116,14 @@ function App() {
             />
           </div>
           <div className="drink-visualization-wrapper">
-            <DrinkVisualization data={voteData} />
+            <DrinkVisualization
+              data={{
+                roundNumber: 2,
+                drinks: [],
+                isFinished: false,
+                addedDrinks: ["Coke", "Vanilla"],
+              }}
+            />
           </div>
           <footer>
             <button
