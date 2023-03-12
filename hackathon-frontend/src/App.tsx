@@ -9,8 +9,8 @@ import { generateUUID } from "./components/generateUUID";
 import LoadingBar from "./components/LoadingBar";
 import LoadingScreen from "./components/LoadingScreen";
 
-import { io } from 'socket.io-client';
-const sockets = io('http://3.25.151.51:3000');
+import { io } from "socket.io-client";
+const sockets = io("http://3.25.151.51:3000");
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -18,7 +18,13 @@ function App() {
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
-  const [voteData, setVoteData] = useState<any>();
+  const [voteData, setVoteData] = useState<IReceiveData | undefined>();
+  //   {
+  //   roundNumber: 2,
+  //   drinks: [],
+  //   isFinished: false,
+  //   addedDrinks: ["Coke", "Vanilla", "Tobasco"],
+  // }
   useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
@@ -30,13 +36,21 @@ function App() {
   });
   const [increasePower, setIncreasePower] = useState(false);
 
+  // setVoteData({
+  //   roundNumber: 2,
+  //   drinks: [],
+  //   isFinished: false,
+  //   addedDrinks: ["Coke", "Vanilla"],
+  // });
+  console.log("voteData:", voteData);
+
   const handleChoice = () => {
     setCurrentOut({
       ...currentOut,
       isBoosted: increasePower,
       drinkChoice: selected,
     });
-    sockets.emit('drinkChoice', currentOut);
+    sockets.emit("drinkChoice", currentOut);
   };
   
   var finishDrinkPercentage = 0;
@@ -63,18 +77,24 @@ function App() {
   return (
     <>
       {userName === "" && !loading && <Login setUserName={setUserName} />}
-      {loading && userName !== "" && <LoadingScreen username={userName} />}
+      {((loading && userName !== "") ||
+        (voteData === undefined && userName !== "")) && (
+        <LoadingScreen username={userName} />
+      )}
 
-      {userName !== "" && !loading && (
+      {userName !== "" && !loading && voteData !== undefined && (
         <div className="main-screen">
           <div className="App">
             <div className="project-name">
               <LoadingBar currentTime={40} totalTime={45} />
               <header>
                 <div>User Name: {userName}</div>
-                <div>Round Number: {voteData?.roundNumber}</div>
+                {/* <div>Round Number: {voteData?.roundNumber || 4}</div> */}
               </header>
-              <button
+              {
+                //REMOVED THE BUTTON TO INCREASE POWER
+              }
+              {/* <button
                 className="increase-vote"
                 style={{
                   backgroundColor: increasePower
@@ -87,7 +107,7 @@ function App() {
                 }}
               >
                 Increase Vote Power: {increasePower ? " Active" : " Inactive"}
-              </button>
+              </button> */}
             </div>
             <OptionSelector
               options={roundOptions}
@@ -98,7 +118,17 @@ function App() {
             />
           </div>
           <div className="drink-visualization-wrapper">
-            <DrinkVisualization />
+            <DrinkVisualization
+              data={
+                //   {
+                //   roundNumber: 2,
+                //   drinks: [],
+                //   isFinished: false,
+                //   addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
+                // }
+                voteData
+              }
+            />
           </div>
           <footer>
             <button
@@ -128,6 +158,18 @@ function App() {
           </footer>
         </div>
       )}
+      {/* <button
+        onClick={() =>
+          setVoteData({
+            roundNumber: 2,
+            drinks: [],
+            isFinished: false,
+            addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
+          })
+        }
+      >
+        Click here to update data
+      </button> */}
     </>
   );
 }
