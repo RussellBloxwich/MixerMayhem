@@ -52,7 +52,7 @@ function App() {
     });
     sockets.emit("drinkChoice", currentOut);
   };
-
+  
   var finishDrinkPercentage = 0;
   var nextRoundPercentage = 0;
 
@@ -64,15 +64,15 @@ function App() {
         }
       });
     }
-
+  
     if (voteData?.drinks != undefined) {
-      voteData?.drinks.forEach((drink: any) => {
-        if (drink.drinkName === "skip round") {
-          nextRoundPercentage = drink.drinkChance;
-        }
-      });
-    }
-  }, [voteData]);
+    voteData?.drinks.forEach((drink: any) => {
+      if (drink.drinkName === "skip round") {
+        nextRoundPercentage = drink.drinkChance;
+      }
+    });
+  }
+}, [voteData]);
 
   return (
     <>
