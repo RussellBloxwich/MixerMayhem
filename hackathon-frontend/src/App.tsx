@@ -18,12 +18,13 @@ function App() {
   const [selected, setSelected] = useState<string>("");
   const [roundOptions, setRoundOptions] = useState<string[]>([]);
   useGetDrinkOptions(setRoundOptions);
-  const [voteData, setVoteData] = useState<IReceiveData | undefined>({
-    roundNumber: 2,
-    drinks: [],
-    isFinished: false,
-    addedDrinks: ["Coke", "Vanilla"],
-  });
+  const [voteData, setVoteData] = useState<IReceiveData | undefined>();
+  //   {
+  //   roundNumber: 2,
+  //   drinks: [],
+  //   isFinished: false,
+  //   addedDrinks: ["Coke", "Vanilla", "Tobasco"],
+  // }
   useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
     isBoosted: false,
@@ -76,11 +77,12 @@ function App() {
   return (
     <>
       {userName === "" && !loading && <Login setUserName={setUserName} />}
-      {((loading && userName !== "") || voteData === undefined) && (
+      {((loading && userName !== "") ||
+        (voteData === undefined && userName !== "")) && (
         <LoadingScreen username={userName} />
       )}
 
-      {userName !== "" && !loading && (
+      {userName !== "" && !loading && voteData !== undefined && (
         <div className="main-screen">
           <div className="App">
             <div className="project-name">
@@ -117,12 +119,15 @@ function App() {
           </div>
           <div className="drink-visualization-wrapper">
             <DrinkVisualization
-              data={{
-                roundNumber: 2,
-                drinks: [],
-                isFinished: false,
-                addedDrinks: ["Coke", "Vanilla"],
-              }}
+              data={
+                //   {
+                //   roundNumber: 2,
+                //   drinks: [],
+                //   isFinished: false,
+                //   addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
+                // }
+                voteData
+              }
             />
           </div>
           <footer>
@@ -153,6 +158,18 @@ function App() {
           </footer>
         </div>
       )}
+      {/* <button
+        onClick={() =>
+          setVoteData({
+            roundNumber: 2,
+            drinks: [],
+            isFinished: false,
+            addedDrinks: ["Coke", "Vanilla", "Tobasco", "Soy"],
+          })
+        }
+      >
+        Click here to update data
+      </button> */}
     </>
   );
 }
