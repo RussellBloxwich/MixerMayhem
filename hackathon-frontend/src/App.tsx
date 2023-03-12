@@ -98,7 +98,7 @@ function App() {
             />
           </div>
           <div className="drink-visualization-wrapper">
-            <DrinkVisualization data={currentIn} />
+            <DrinkVisualization data={voteData} />
           </div>
           <footer>
             <button
