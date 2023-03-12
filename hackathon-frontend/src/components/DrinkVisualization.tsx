@@ -21,33 +21,45 @@ const DrinkVisualization = ({ data }: { data: IReceiveData }) => {
   // const cheese2 = getDrinkArray(data.addedDrinks);
   const cheese = getDrinkQuantities(data.addedDrinks);
   // const cheese = getDrinkQuantities(values2);
-
+  console.log(data);
+  const lastAdded = data.drinks[data.addedDrinks.length - 1].drinkName;
+  var message: string;
+  if (lastAdded === "Mix") {
+    message = "Drink Mixed";
+  } else if (lastAdded === "Skip") {
+    message = "Options Skipped";
+  } else {
+    message = "Added " + lastAdded;
+  }
   return (
-    <div className="bottle">
-      {cheese.map((drink, i) => {
-        if (drink.percentage > 0) {
-          return (
-            <div
-              key={drink.name + i.toString()}
-              className="drink-selection"
-              style={{
-                height: `${drink.percentage}%`,
-              }}
-            >
+    <div className="visualization-wrapper">
+      <div className="bottle">
+        {cheese.map((drink, i) => {
+          if (drink.percentage > 0) {
+            return (
               <div
-                className="liqued-background"
+                key={drink.name + i.toString()}
+                className="drink-selection"
                 style={{
-                  backgroundColor: drink.colour,
+                  height: `${drink.percentage}%`,
                 }}
-              ></div>
-              {/* <div className="liqued-name">{drink.name}</div> */}
-            </div>
-          );
-        }
-      })}
-      <div className="bottle-svg">
-        <BottleSVG />
+              >
+                <div
+                  className="liqued-background"
+                  style={{
+                    backgroundColor: drink.colour,
+                  }}
+                ></div>
+                {/* <div className="liqued-name">{drink.name}</div> */}
+              </div>
+            );
+          }
+        })}
+        <div className="bottle-svg">
+          <BottleSVG />
+        </div>
       </div>
+      <div className="last-drink-added">{message}</div>
     </div>
   );
 };
