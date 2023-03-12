@@ -16,7 +16,7 @@ const DRINKQUANTITIES: DrinkData[] = [
   { name: "Coke", volume: 200, colour: "brown" },
   { name: "Milk", volume: 200, colour: "white" },
   { name: "Juice", volume: 200, colour: "orange" },
-  { name: "Tabasco", volume: 40, colour: "red" },
+  { name: "Tobasco", volume: 40, colour: "red" },
   { name: "Vanilla", volume: 20, colour: "NavahoWhite" },
   { name: "Lemon", volume: 20, colour: "yellow" },
   { name: "Peppermint", volume: 20, colour: "#C1E4D8" },

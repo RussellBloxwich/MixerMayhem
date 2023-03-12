@@ -22,9 +22,9 @@ const DrinkVisualization = ({ data }: { data: IReceiveData }) => {
   // const cheese2 = getDrinkArray(data.addedDrinks);
   const cheese = getDrinkQuantities(data.addedDrinks);
   // const cheese = getDrinkQuantities(values2);
-  console.log(data);
+  // console.log(data);
   if (data.addedDrinks.length > 0) {
-    console.log("HERE:", data.addedDrinks[data.addedDrinks.length - 1]);
+    // console.log("HERE:", data.addedDrinks[data.addedDrinks.length - 1]);
     var lastAdded = data.addedDrinks[data.addedDrinks.length - 1];
   } else {
     var lastAdded = "none";
