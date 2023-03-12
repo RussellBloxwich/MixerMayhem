@@ -20,7 +20,7 @@ function VolumeAllowedDrinks(currentVolume) {
 
 export const drinkSizes = [
   { size: 'L', volume: 200 },
-  { size: 'S', volume: 10 },
+  { size: 'S', volume: 15 },
 ];
 
 export const drinkOptions = [
