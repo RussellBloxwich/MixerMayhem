@@ -18,16 +18,24 @@ import { getDrinkQuantities } from "./getDrinkQuantities";
 const values2 = ["Tabasco", "Coke", "Milk", "Soy", "Tabasco", "Soy", "Heat"];
 
 const DrinkVisualization = ({ data }: { data: IReceiveData }) => {
+  // console.log("DATA:", data)
   // const cheese2 = getDrinkArray(data.addedDrinks);
   const cheese = getDrinkQuantities(data.addedDrinks);
   // const cheese = getDrinkQuantities(values2);
   console.log(data);
-  const lastAdded = data.drinks[data.addedDrinks.length - 1].drinkName;
+  if (data.addedDrinks.length > 0) {
+    console.log("HERE:", data.addedDrinks[data.addedDrinks.length - 1]);
+    var lastAdded = data.addedDrinks[data.addedDrinks.length - 1];
+  } else {
+    var lastAdded = "none";
+  }
   var message: string;
   if (lastAdded === "Mix") {
     message = "Drink Mixed";
   } else if (lastAdded === "Skip") {
     message = "Options Skipped";
+  } else if (lastAdded === "none" || lastAdded === undefined) {
+    message = "No previous drink";
   } else {
     message = "Added " + lastAdded;
   }
