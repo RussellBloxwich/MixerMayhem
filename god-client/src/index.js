@@ -28,7 +28,7 @@ let numberOfRounds = 5;
 function StartRoundSetup() {
   // Send viable drink options to frontend
   console.log(`Current Volume: ${currentVolume}`);
-  const drinkOptions = GetDrinkOptions(5, currentVolume, actions);
+  const drinkOptions = GetDrinkOptions(4, currentVolume, actions);
   sockets.emit('drinkOptions', drinkOptions);
   drinkVotes = SetUpDrinkVotes(drinkOptions);
   setTimeout(EndRound, roundLengthInMs);
@@ -69,6 +69,7 @@ function EndRound() {
     numberOfRounds
   );
 
+
   let voteResult = GetVoteResult(drinkVotes);
   console.log(`The vote result was ${voteResult.drinkName}.\n`);
 
@@ -77,11 +78,11 @@ function EndRound() {
   } else if (voteResult.drinkName == 'Mix') {
     numberOfRounds++;
     actions['hasMixed'] = true;
-    // TODO: Add Mixing Protocol
+    SendProtocolToHardware('Mix');
   } else if (voteResult.drinkName == 'Heat') {
     numberOfRounds++;
     actions['hasHeated'] = true;
-    // TODO: Add heating Protocol
+    SendProtocolToHardware('Heat');
   } else {
     const drinkVolume = drinkSizes.find(
       (object) =>
@@ -89,6 +90,7 @@ function EndRound() {
         drinkOptions.find((drink) => drink.name === voteResult.drinkName).size
     ).volume;
     currentVolume += drinkVolume;
+    SendProtocolToHardware(voteResult.drinkName);
   }
 
   drinkHistory.push(voteResult);
@@ -106,7 +108,6 @@ function EndRound() {
   console.log('End-of-round payload to send to front end: ', payload);
   sockets.emit('roundEndChoiceData', payload);
 
-  SendProtocolToHardware(voteResult);
 
   // Finish drink or move to next round
   if (votingIsFinished) {
