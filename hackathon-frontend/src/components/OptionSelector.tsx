@@ -44,7 +44,7 @@ const OptionSelector = ({
   const handleClick = (name: string) => {
     setSelected(name);
     console.log(name);
-    handleChoice()
+    handleChoice();
   };
 
   if (voteData !== undefined) {

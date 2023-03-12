@@ -5,13 +5,13 @@ export interface ISendData {
   userName: string;
   vote: string;
   isBoosted: boolean;
-  drinkChoice : string;
-  roundEndChoice : string;
+  drinkChoice: string;
+  roundEndChoice: string;
 }
 
 export interface IReceiveData {
   roundNumber: number;
   drinks: { drinkName: string; drinkVoteCount: number; drinkChance: number }[];
   isFinished: boolean;
-  addedDrinks : string[]
+  addedDrinks: string[];
 }

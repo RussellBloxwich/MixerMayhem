@@ -22,7 +22,7 @@ function App() {
     roundNumber: 2,
     drinks: [{ drinkName: "Coke", drinkVoteCount: 20, drinkChance: 20 }],
     isFinished: false,
-    addedDrinks: ["Coke", "Vanilla", "Tobasco"],
+    addedDrinks: [],
   });
   useGetVoteData(setVoteData);
   const [currentOut, setCurrentOut] = useState<ISendData>({
